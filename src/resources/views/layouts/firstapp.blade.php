@@ -27,5 +27,8 @@
     @yield('content')
   </main>
 </body>
+    <footer>
+        <p>Atte, Inc.</p>
+    </footer>
 
 </html>

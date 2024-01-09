@@ -13,4 +13,5 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-Route::get('/register', [EmployeeController::class, 'index']);
+Route::get('/register', [EmployeeController::class, 'register']);
+Route::get('/login', [EmployeeController::class, 'login']);

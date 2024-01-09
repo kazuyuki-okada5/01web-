@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-   public function index()
-       {
-          return view('employee/employeeregister');
-       }
+    public function register()
+    {
+        return view('employee/employeeregister');
+    }
+
+    public function login()
+    {
+        return view('employee/employeelogin');
+    }
 }

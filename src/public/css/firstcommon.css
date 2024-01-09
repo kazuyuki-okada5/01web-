@@ -4,7 +4,7 @@ p {
     /* 2ピクセルの実線の外枠を設定 */
     padding: 15px;
     /* テキストと外枠の余白を設定 */
-    max-width: 1080px;
+    max-width: 100%;
     /* 横画面の最大幅を600pxに設定 */
     margin: 0 auto;
     /* ページの中央寄せ */
@@ -13,4 +13,17 @@ p {
     font-size: 30px;
         /* 18ピクセルの文字サイズを設定 */
 }
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    line-height: 2vh;
+}
 
+footer p {
+    font-size: 16px;
+    margin: 0;
+}
