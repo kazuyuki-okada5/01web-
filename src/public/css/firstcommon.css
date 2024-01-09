@@ -1,0 +1,16 @@
+/* 外枠のスタイル設定 */
+p {
+    border: 0px solid #333;
+    /* 2ピクセルの実線の外枠を設定 */
+    padding: 15px;
+    /* テキストと外枠の余白を設定 */
+    max-width: 1080px;
+    /* 横画面の最大幅を600pxに設定 */
+    margin: 0 auto;
+    /* ページの中央寄せ */
+    background-color: #ffffff;
+        /* 外枠の背景色を設定 */
+    font-size: 30px;
+        /* 18ピクセルの文字サイズを設定 */
+}
+
