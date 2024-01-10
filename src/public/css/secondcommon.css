@@ -1,0 +1,48 @@
+.header {
+    background-color: #ffffff;
+}
+
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.header-utilities {
+    display: flex;
+    align-items: center;
+}
+
+.header-utilities p {
+    margin: 0;
+}
+
+.header-button {
+    display: flex;
+}
+
+.header-button .button {
+    margin-left: 10px;
+    /* ボタンとボタンの間に余白を設定 */
+    /* ボタンのスタイルを設定 */
+    border: 2px solid #ffffff;
+    /* ボーダーの変更 */
+    background-color: #ffffff;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    line-height: 5vh;
+    background-color: #ffffff;
+}
+
+footer p {
+    font-size: 16px;
+    margin: 0;
+}

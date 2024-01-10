@@ -15,4 +15,13 @@ class EmployeeController extends Controller
     {
         return view('employee/employeelogin');
     }
+
+    public function stamp()
+    {
+        return view('stamp');
+    }
+    public function attendees()
+    {
+        return view('attendees');
+    }
 }
