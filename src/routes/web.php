@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +13,6 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-Route::get('/register', [EmployeeController::class, 'register']);
-Route::get('/login', [EmployeeController::class, 'login']);
-Route::get('/stamp', [EmployeeController::class, 'stamp']);
-Route::get('/attendees', [EmployeeController::class, 'attendees']);
+Route::get('/', function () {
+    return view('welcome');
+});
