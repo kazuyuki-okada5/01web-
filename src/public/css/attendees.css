@@ -1,0 +1,34 @@
+.attendees__content{
+        max-width: 100%;
+            /* 必要に応じて幅を調整 */
+            height: 800px;
+            /* コンテンツに基づいて高さを自動調整 */
+            margin: 0 auto;
+            padding: 60px;
+            background-color: #f0f0f0;
+}
+.attendess_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 20px;
+}
+
+.item_th {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background-color: #f2f2f2;
+    border-top: 1px solid #ddd;
+}
+
+.info_td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.info_tr:last-child .info_td {
+    border-bottom: none;
+    /* 最後の行の横線を消す */
+}
