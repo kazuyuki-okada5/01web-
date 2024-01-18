@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,10 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth')->group(function () {
     Route::get('/', [AuthController::class, 'stamp']);
 });
+Route::get('/attendees', [AuthorController::class, 'index']);
+Route::prefix('book')->group(function () {
+    Route::get('/book', [BookController::class, 'index']);
+    Route::get('/add', [BookController::class, 'add']);
+    Route::post('/add', [BookController::class, 'create']);
+    });
+Route::get('/relation', [AuthorController::class, 'relate']);

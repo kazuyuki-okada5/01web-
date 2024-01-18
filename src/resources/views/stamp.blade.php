@@ -33,7 +33,6 @@
         </div>
         <form class="form" action="/logout" method="post">
           @csrf
-
 </form>
     </div>
 </body>
