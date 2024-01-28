@@ -21,8 +21,8 @@
         <div class="header-button">
             <button class="logout_button" action="/logout" method="post">
               @csrf
-            <button class="button">ホーム</button>
-            <button class="button">日付一覧</button>
+            <a href="/" class="button">ホーム</a>
+            <a href="/lists" class="button">日付一覧</a>
             <form class="form" action="/logout" method="post">
           @csrf
           <button class="header-nav__button">ログアウト</button>

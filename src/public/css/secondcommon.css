@@ -30,6 +30,41 @@
     /* ボーダーの変更 */
     background-color: #ffffff;
 }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            /* 左右に均等に配置 */
+            align-items: center;
+            /* 上下に中央配置 */
+            height: 100vh;
+            /* 画面の高さいっぱいに広がるように */
+        }
+    
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 左右に中央配置 */
+            justify-content: space-between;
+            /* 上下に均等に配置 */
+            height: 50%;
+            /* 親要素の高さの半分に */
+            width: 50%;
+            /* 親要素の幅の半分に */
+        }
+    
+        .atte_button {
+            /* ボタンのスタイリング（任意のスタイルを追加） */
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #3490dc;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+        }
 
 footer {
     position: fixed;

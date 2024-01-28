@@ -1,26 +1,41 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Book extends Model
+class CreateBooksTable extends Migration
 {
-    use HasFactory;
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            // テーブルの定義
+            $table->id();
+            $table->string('name');
+            $table->date('start_date');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->time('break_start_time')->nullable();
+            $table->time('break_end_time')->nullable();
+            $table->decimal('break_hours', 5, 2)->default(0);
+            $table->decimal('total_hours', 5, 2)->default(0);
+            $table->timestamps();
+        });
+    }
 
-    protected $fillable = [
-        'name',
-        'start_date',
-        'start_time',
-        'end_time',
-        'break_hours',
-        'total_hours',
-    ];
-
-    protected $dates = ['start_date', 'start_time', 'end_time'];
-
-    public $timestamps = false; // デフォルトのタイムスタンプを無効にする場合
-
-    // その他のモデルのロジックや関連を記述することができます
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        // ロールバックの処理
+        Schema::dropIfExists('books');
+    }
 }

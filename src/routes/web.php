@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +17,20 @@ use App\Http\Controllers\BookController;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AuthController::class, 'stamp']);
+    // ログインしている場合のみアクセス可能なルートをグループ化
+    Route::get('/', [BookController::class, 'stamp']);
 });
-Route::get('/attendees', [AuthorController::class, 'index']);
+
 Route::prefix('book')->group(function () {
-    Route::get('/book', [BookController::class, 'index']);
-    Route::get('/add', [BookController::class, 'add']);
-    Route::post('/add', [BookController::class, 'create']);
-    });
-Route::get('/relation', [AuthorController::class, 'relate']);
+    // /book ルートにGETメソッドでアクセス可能なルートを追加
+    Route::get('/', [BookController::class, 'stamp']);
+
+    // /book ルートにPOSTメソッドでアクセス可能なルートを追加
+    Route::post('/', [BookController::class, 'create']);
+});
+
+Route::post('/log-activity/{action}', [BookController::class, 'logActivity'])->name('log-activity');
+Route::resource('books', 'BookController');
+
+Route::get('/list', [ListController::class, 'index']);
+Route::resource('lists', ListController::class);
