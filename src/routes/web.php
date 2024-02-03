@@ -32,5 +32,10 @@ Route::prefix('book')->group(function () {
 Route::post('/log-activity/{action}', [BookController::class, 'logActivity'])->name('log-activity');
 Route::resource('books', 'BookController');
 
-Route::get('/list', [ListController::class, 'index']);
+Route::get('/lists', [ListController::class, 'index']);
 Route::resource('lists', ListController::class);
+
+Route::get('/attendees/{date}', 'BookController@getAttendeesByDate')->name('attendees.by.date');
+Route::get('/attendees/move/{direction}/{currentDate}', 'BookController@moveDate')->name('attendees.move.date');
+Route::get('/attendees/date/{currentDate}', 'BookController@showByDate')
+    ->name('attendees.showByDate');

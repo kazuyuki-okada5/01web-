@@ -13,7 +13,8 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-         if (!Schema::hasTable('users')) {
+        // 'users' テーブルが存在しない場合は作成
+        if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
@@ -24,10 +25,23 @@ class CreateUsersTable extends Migration
                 $table->timestamps();
             });
         }
-         // 外部キーの追加
-        Schema::table('lists', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+
+        // 'lists' テーブルが存在しない場合は作成
+        if (!Schema::hasTable('lists')) {
+            Schema::create('lists', function (Blueprint $table) {
+                $table->id();
+                $table->bigInteger('user_id')->unsigned();
+                $table->date('start_date');
+                $table->time('start_time')->nullable();
+                $table->time('end_time')->nullable();
+                $table->time('break_start_time')->nullable();
+                $table->time('break_end_time')->nullable();
+                $table->decimal('break_hours', 5, 2)->default(0);
+                $table->decimal('total_hours', 5, 2)->default(0);
+                $table->timestamps();
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            });
+        }
     }
 
     /**
@@ -36,16 +50,18 @@ class CreateUsersTable extends Migration
      * @return void
      */
     public function down()
-{
-    // authors テーブルに user_id カラムが存在し、その外部キーが設定されているか確認
-    if (Schema::hasColumn('authors', 'user_id')) {
-        // authors テーブルの外部キーを削除
-        Schema::table('authors', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-        });
-    }
+    {
+        // 'lists' テーブルに外部キーが存在し、その外部キーを削除
+        if (Schema::hasTable('lists') && Schema::hasColumn('lists', 'user_id')) {
+            Schema::table('lists', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+            });
+        }
 
-    // authors テーブルを削除
-    Schema::dropIfExists('authors');
-}
+        // 'lists' テーブルを削除
+        Schema::dropIfExists('lists');
+
+        // 'users' テーブルを削除
+        Schema::dropIfExists('users');
+    }
 }

@@ -1,0 +1,33 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 8px;
+    /* 余白を少し広げました */
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #3490dc;
+    padding: 8px 16px;
+    /* パディングを調整し、ボタンがよりクリックしやすくなりました */
+    border: 2px solid #3490dc;
+    /* ボーダーの太さを変更しました */
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #3490dc;
+    color: white;
+}
+
+.pagination .active a {
+    background-color: #3490dc;
+    color: white;
+}
