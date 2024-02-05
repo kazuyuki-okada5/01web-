@@ -73,10 +73,13 @@ public function getBreakEndTimeAttribute($value)
         $breakSeconds = $breakEnd - $breakStart;
         $totalSeconds = $end - $start - $breakSeconds;
 
-        $this->break_seconds = $breakSeconds;
-        $this->total_seconds = $totalSeconds;
+        // 修正: $this->total_seconds の値を更新
+        $this->attributes['total_seconds'] = $totalSeconds;
 
-        
+        // 修正: データベースに保存
+        $this->save();
+
+        dd('calculateTotalHours is called', $this->attributes['break_seconds'], $this->attributes['total_seconds']);
     }
 }
     // アクセサ: 休憩時間を「h:m:s」のフォーマットに変換

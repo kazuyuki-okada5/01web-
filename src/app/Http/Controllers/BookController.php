@@ -132,24 +132,28 @@ class BookController extends Controller
             case 'endBreak':
                 if (!$existingRecord->break_end_time) {
                     $logData['break_end_time'] = now();
-                }
                 
-                // 追加: 休憩時間を計算してsecondsに保存
-                $breakStartTime = Carbon::parse($existingRecord->break_start_time);
-                $breakEndTime = Carbon::parse($logData['break_end_time']);
-                $logData['break_seconds'] = $breakEndTime->diffInSeconds($breakStartTime);
-
+                    // 休憩時間を計算してsecondsに保存
+                    $breakStartTime = Carbon::parse($existingRecord->break_start_time);
+                    $breakEndTime = Carbon::parse($logData['break_end_time']);
+                    $logData['break_seconds'] = $breakEndTime->diffInSeconds($breakStartTime);
+                }
                 break;
             case 'endWork':
                 if (!$existingRecord->end_time) {
                     $logData['end_time'] = now();
-                    
+                    // ここではまだcalculateTotalHoursを呼び出さない
                 }
                 break;
         }
 
         $existingRecord->update($logData);
-        $existingRecord->calculateTotalHours();
+
+        // endWorkの場合、ここでcalculateTotalHoursを呼び出す
+        if ($action === 'endWork') {
+            $existingRecord->calculateTotalHours();
+            dd('endWork case is executed', $logData);
+        }
     } else {
         $validator = Validator::make($logData, [
             'name' => 'required|string',
@@ -160,7 +164,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-         // 休憩時間と合計時間を計算
+        // 休憩時間と合計時間を計算
         $breakStartTime = Carbon::parse($logData['break_start_time']);
         $breakEndTime = Carbon::parse($logData['break_end_time']);
         $logData['break_seconds'] = $breakEndTime->diffInSeconds($breakStartTime);
