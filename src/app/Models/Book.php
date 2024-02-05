@@ -11,29 +11,17 @@ class Book extends Model
 
     protected $fillable = [
         'name',
-        'start_date',
+        'login_date',
         'start_time',
         'end_time',
         'break_start_time',
         'break_end_time',
         'user_id',
-        'break_hours', // 修正: カラム名を元に戻す
-        'total_hours', // 修正: カラム名を元に戻す
+        'break_seconds',
+        'total_seconds',
     ];
 
-    protected $dates = ['start_date', 'start_time', 'end_time', 'break_start_time', 'break_end_time'];
 
-     public function startWork()
-    {
-        // 現在の日時を取得
-        $now = now();
-
-        // start_date と start_time を更新
-        $this->update([
-            'start_date' => $now->toDateString(),
-            'start_time' => $now->toTimeString(),
-        ]);
-    }
 public function getEndTimeAttribute($value)
 {
     // 時刻をそのまま取得する
@@ -61,26 +49,19 @@ public function getBreakEndTimeAttribute($value)
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     protected static function boot()
-    {
-        parent::boot();
+{
+    parent::boot();
 
-        static::creating(function ($model) {
-            $model->created_at = now();
-            $model->updated_at = now();
-            $model->calculateTotalHours(); // 修正: メソッド名を元に戻す
-        });
+    
 
-        static::updating(function ($model) {
-            $model->updated_at = now();
-            $model->calculateTotalHours(); // 修正: メソッド名を元に戻す
-        });
-    }
+    
+}
 
-    private function calculateTotalHours()
+    public function calculateTotalHours()
 {
     if ($this->start_time && $this->end_time && $this->break_start_time && $this->break_end_time) {
         $start = strtotime($this->start_time);
@@ -94,8 +75,10 @@ public function getBreakEndTimeAttribute($value)
 
         $this->break_seconds = $breakSeconds;
         $this->total_seconds = $totalSeconds;
+
+        
     }
-    }
+}
     // アクセサ: 休憩時間を「h:m:s」のフォーマットに変換
 public function getBreakHoursFormattedAttribute()
 {
