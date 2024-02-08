@@ -44,3 +44,9 @@
     background-color: #f9f9f9;
     /* ホバー時の背景色の変更 */
 }
+.button-container form button:disabled {
+    background-color: rgb(227, 227, 227);
+    /* 無効時の背景色 */
+    color: rgb(169, 169, 169);
+    /* 無効時のテキスト色 */
+}

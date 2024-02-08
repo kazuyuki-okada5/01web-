@@ -27,9 +27,29 @@ class BookController extends Controller
     }
 
     public function stamp()
-    {
-        return view('book.stamp');
-    }
+{
+    // データベースから現在のレコードを取得
+    $existingRecord = $this->getExistingRecord();
+
+    // ボタンの状態を決定
+    $startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
+    $endButtonDisabled = (!$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null || $existingRecord->break_start_time !== null || $existingRecord->break_end_time !== null) && $existingRecord->end_time !== null;
+    $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->break_start_time !== null;
+    $breakEndButtonDisabled = !$existingRecord || $existingRecord->break_start_time === null || $existingRecord->break_end_time !== null || $existingRecord->end_time !== null;
+
+    return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
+}
+
+// 現在のレコードを取得するメソッド
+private function getExistingRecord()
+{
+    $userName = auth()->user()->name;
+    $today = now()->toDateString();
+
+    return Book::where('name', $userName)
+        ->where('login_date', $today)
+        ->first();
+}
 
     public function create(Request $request)
     {

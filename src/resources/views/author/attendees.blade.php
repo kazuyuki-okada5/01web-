@@ -21,6 +21,7 @@
                 <th class="item_th">休憩時間</th>
                 <th class="item_th">勤務時間</th>
             </tr>
+            @if (!empty($books))
             @foreach ($books as $book)
                     <tr class="info_tr">
                         <td class="info_td">{{ $book->name }}</td>
@@ -30,10 +31,17 @@
                         <td class="info_td">{{ $book->total_hours_formatted }}</td>
                     </tr>
             @endforeach
+            @else
+@endif
         </table>
-        
-
+        @if ($books)
+    <!-- $books 変数が null でない場合にのみ実行 -->
+    <div class="attendees__content">
+        <!-- データの表示や処理 -->
         {{ $books->withQueryString()->links() }}
     </div>
+@else
+        <p>表示すべきデータがありません。</p>
+@endif
 </div>
 @endsection

@@ -14,29 +14,30 @@
         <div id="message"></div>
 
          <div class="button-container">
-    <!-- 既存の「勤務開始」と「勤務終了」のフォーム -->
+    <!-- 勤務開始フォーム -->
     <form method="post" action="{{ route('log-activity', ['action' => 'startWork']) }}">
         @csrf
-        <!-- 他のフォームフィールドなどがあればここに追加 -->
-        <button type="submit">勤務開始</button>
+        <button type="submit" <?php if ($startButtonDisabled) echo 'disabled'; ?> class="<?php if ($startButtonDisabled) echo 'disabled-button'; ?>">勤務開始</button>
     </form>
 
+    <!-- 勤務終了フォーム -->
     <form method="post" action="{{ route('log-activity', ['action' => 'endWork']) }}">
         @csrf
-        <button type="submit">勤務終了</button>
+        <button type="submit" <?php if ($endButtonDisabled) echo 'disabled'; ?> class="<?php if ($endButtonDisabled) echo 'disabled-button'; ?>">勤務終了</button>
     </form>
 </div>
 
-<!-- 新しい「休憩開始」と「休憩終了」のフォーム -->
+<!-- 休憩開始フォーム -->
 <div class="button-container">
     <form method="post" action="{{ route('log-activity', ['action' => 'startBreak']) }}">
         @csrf
-        <button type="submit">休憩開始</button>
+        <button type="submit" <?php if ($breakStartButtonDisabled) echo 'disabled'; ?> class="<?php if ($breakStartButtonDisabled) echo 'disabled-button'; ?>">休憩開始</button>
     </form>
 
+    <!-- 休憩終了フォーム -->
     <form method="post" action="{{ route('log-activity', ['action' => 'endBreak']) }}">
         @csrf
-        <button type="submit">休憩終了</button>
+        <button type="submit" <?php if ($breakEndButtonDisabled) echo 'disabled'; ?> class="<?php if ($breakEndButtonDisabled) echo 'disabled-button'; ?>">休憩終了</button>
     </form>
 </div>
 
