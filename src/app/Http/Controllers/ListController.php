@@ -13,23 +13,14 @@ class ListController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function showByDate($currentDate)
     {
-    // ログ出力
-    \Log::info('SQL Query: ' . Book::whereDate('start_date', $currentDate)->toSql());
-    \Log::info('Query Builder: ' . Book::whereDate('start_date', $currentDate)->get());
-    // 指定された日付に基づいてデータを取得
-    $books = Book::whereDate('start_date', $currentDate)->get();
+        // 指定された日付に一致するデータを取得
+        $books = Book::whereDate('login_date', $currentDate)->paginate(5);
 
-
-    // 他の必要な処理
-
-    return view('author.attendees', [
-        'books' => $books,
-        'currentDate' => $currentDate,
-        // 他のデータを必要に応じて渡す
-    ]);
-    
+        // ビューにデータを渡す
+        return view('author.attendees', ['books' => $books, 'currentDate' => $currentDate]);
     }
     // スタンプ画面を表示するメソッド
     public function book()
@@ -41,34 +32,47 @@ class ListController extends Controller
     public function getAttendeesByDate($date)
     {
         // 日付を指定してデータを取得
-        $books = Book::whereDate('start_date', $date)->paginate(5);
+        $books = Book::whereDate('login_date', $date)->paginate(5);
 
         // ビューにデータを渡す
         return view('author.attendees', ['books' => $books, 'currentDate' => $date]);
     }
 
-    // 前日・後日に移動するためのメソッド
+    // 前日・翌日に移動するためのメソッド
     public function moveDate($direction, $currentDate)
     {
-        // 前日・後日に移動するロジックを実装
+        // 前日・翌日に移動するロジックを実装
         $carbonDate = Carbon::parse($currentDate);
         $newDate = ($direction == 'prev') ? $carbonDate->subDay() : $carbonDate->addDay();
 
-        return redirect()->route('attendees.by.date', ['date' => $newDate->toDateString()]);
+        return redirect()->route('attendees.showByDate', ['currentDate' => $newDate->toDateString()]);
     }
 
+    
     // ページネーションを含むデータの取得
-    public function index()
-    {
-    // ページネーションを追加してデータを取得
-        $books = Book::paginate(5);
-        
-        // 現在の日付を取得
-        $currentDate = now()->toDateString();
+    public function index(Request $request)
+{
+    // リクエストから検索条件を取得
+    $currentDate = $request->input('currentDate', now()->toDateString());
 
-        // ビューにデータを渡す
-        return view('author.attendees', ['books' => $books, 'currentDate' => $currentDate]);
+    // 一日前の日付を計算して $prevDate に代入する
+    $prevDate = Carbon::parse($currentDate)->subDay()->toDateString();
+
+    // 指定された日付に一致するデータのみを取得
+    $books = Book::whereDate('login_date', $currentDate)
+                ->whereNotNull('start_time')
+                ->whereNotNull('end_time')
+                ->orderBy('login_date', 'asc')
+                ->paginate(5);
+
+    // 検索結果がない場合はnullを代入
+    if ($books->isEmpty()) {
+        $books = null;
     }
+
+    // 検索結果と$prevDateをビューに渡す
+    return view('author.attendees', compact('books', 'currentDate', 'prevDate'));
+}
 
     public function relate(Request $request)
     {

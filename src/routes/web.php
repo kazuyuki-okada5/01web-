@@ -39,3 +39,6 @@ Route::get('/attendees/{date}', 'BookController@getAttendeesByDate')->name('atte
 Route::get('/attendees/move/{direction}/{currentDate}', 'BookController@moveDate')->name('attendees.move.date');
 Route::get('/attendees/date/{currentDate}', 'BookController@showByDate')
     ->name('attendees.showByDate');
+Route::get('/attendees', [ListController::class, 'index'])->name('attendees.index');
+Route::get('/attendees/move/{direction}/{currentDate}', [ListController::class, 'moveDate'])->name('attendees.move.date');
+Route::get('/attendees/date/{currentDate}', [ListController::class, 'showByDate'])->name('attendees.showByDate');

@@ -79,7 +79,6 @@ public function getBreakEndTimeAttribute($value)
         // 修正: データベースに保存
         $this->save();
 
-        dd('calculateTotalHours is called', $this->attributes['break_seconds'], $this->attributes['total_seconds']);
     }
 }
     // アクセサ: 休憩時間を「h:m:s」のフォーマットに変換

@@ -10,6 +10,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Bookテーブルにダミーデータを作成する
-        Book::factory(80)->create();
+        Book::factory(30)->create();
     }
 }
