@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,7 @@ Route::get('/attendees/date/{currentDate}', 'BookController@showByDate')
 Route::get('/attendees', [ListController::class, 'index'])->name('attendees.index');
 Route::get('/attendees/move/{direction}/{currentDate}', [ListController::class, 'moveDate'])->name('attendees.move.date');
 Route::get('/attendees/date/{currentDate}', [ListController::class, 'showByDate'])->name('attendees.showByDate');
+Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}', [VerificationController::class, 'verify']);
+Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
