@@ -23,6 +23,7 @@
               @csrf
             <a href="/" class="button">ホーム</a>
             <a href="/lists" class="button">日付一覧</a>
+            <a href="/users_list" class="button">ユーザー一覧</a>
             <form class="form" action="/logout" method="post">
           @csrf
           <button class="header-nav__button">ログアウト</button>
