@@ -7,11 +7,9 @@ use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-    
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -27,29 +25,29 @@ class BookController extends Controller
     }
 
     public function stamp()
-{
-    // データベースから現在のレコードを取得
-    $existingRecord = $this->getExistingRecord();
+    {
+        // 現在のレコードを取得
+        $existingRecord = $this->getExistingRecord();
 
-    // ボタンの状態を決定
-    $startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
-    $endButtonDisabled = (!$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null || $existingRecord->break_start_time !== null || $existingRecord->break_end_time !== null) && $existingRecord->end_time !== null;
-    $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->break_start_time !== null;
-    $breakEndButtonDisabled = !$existingRecord || $existingRecord->break_start_time === null || $existingRecord->break_end_time !== null || $existingRecord->end_time !== null;
+        // ボタンの状態を決定
+        $startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
+        $endButtonDisabled = (!$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null || $existingRecord->break_start_time !== null || $existingRecord->break_end_time !== null) && $existingRecord->end_time !== null;
+        $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null;
+        $breakEndButtonDisabled = !$existingRecord || $existingRecord->break_start_time === null;
 
-    return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
-}
+        return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
+    }
 
-// 現在のレコードを取得するメソッド
-private function getExistingRecord()
-{
-    $userName = auth()->user()->name;
-    $today = now()->toDateString();
+    // 現在のレコードを取得するメソッド
+    private function getExistingRecord()
+    {
+        $userName = auth()->user()->name;
+        $today = now()->toDateString();
 
-    return Book::where('name', $userName)
-        ->where('login_date', $today)
-        ->first();
-}
+        return Book::where('name', $userName)
+            ->where('login_date', $today)
+            ->first();
+    }
 
     public function create(Request $request)
     {
@@ -83,7 +81,6 @@ private function getExistingRecord()
         return redirect()->back();
     }
 
-    
     private function updateDatabaseOnLogin(Book $book)
     {
         if (auth()->check()) {
@@ -91,12 +88,19 @@ private function getExistingRecord()
             $userId = auth()->id();
             $today = now()->toDateString();
 
+             // デバッグメッセージを追加
+            \Log::info('Updating database on login for user: '.$userName);
+
             // Book モデルを使用してデータベースから検索
             $existingRecord = Book::where('name', $userName)
                 ->where('login_date', $today)
                 ->first();
 
             if (!$existingRecord) {
+
+                // デバッグメッセージを追加
+                \Log::info('No existing record found. Creating new record...');
+
                 // レコードが存在しない場合は新しいレコードを作成
                 Book::create([
                     'name' => $userName,
@@ -108,88 +112,71 @@ private function getExistingRecord()
     }
 
     public function logActivity(Request $request, $action)
-    {
-        $userName = auth()->user()->name;
-        $userId = auth()->id();
-        $today = now()->toDateString();
+{
+    $userName = auth()->user()->name;
+    $userId = auth()->id();
+    $today = now()->toDateString();
 
-        $existingRecord = Book::where('name', $userName)
-            ->where('login_date', $today)
-            ->first();
+    // 勤務開始のレコードを取得または作成
+    $existingRecord = Book::where('name', $userName)
+        ->where('login_date', $today)
+        ->first();
 
-        $logData = [
-            'name' => $userName,
-            'login_date' => $today,
-            'user_id' => $userId,
-            'start_time' => optional($existingRecord)->start_time,
-            'end_time' => optional($existingRecord)->end_time,
-            'break_start_time' => optional($existingRecord)->break_start_time,
-            'break_end_time' => optional($existingRecord)->break_end_time,
-        ];
-
-        if (!$existingRecord && $action !== 'startWork') {
-            return redirect()->back();
-        }
-
-        if ($existingRecord) {
-            switch ($action) {
-                case 'startWork':
-                    if (!$existingRecord->start_time) {
-                        $logData['start_time'] = now();
-                    }
-                    break;
-                case 'startBreak':
-                    if (!$existingRecord->break_start_time) {
-                        $logData['break_start_time'] = now();
-                    }
-                    break;
-                case 'endBreak':
-                    if (!$existingRecord->break_end_time) {
-                        $logData['break_end_time'] = now();
-
-                        // 休憩時間を計算してsecondsに保存
-                        $breakStartTime = Carbon::parse($existingRecord->break_start_time);
-                        $breakEndTime = Carbon::parse($logData['break_end_time']);
-                        $logData['break_seconds'] = $breakEndTime->diffInSeconds($breakStartTime);
-                    }
-                    break;
-                case 'endWork':
-                    if (!$existingRecord->end_time) {
-                        $logData['end_time'] = now();
-                        // ここではまだcalculateTotalHoursを呼び出さない
-                    }
-                    break;
-            }
-
-            $existingRecord->update($logData);
-
-            // endWorkの場合、ここでcalculateTotalHoursを呼び出す
-            if ($action === 'endWork') {
-                $existingRecord->calculateTotalHours();
-
-            }
-        } else {
-            $validator = Validator::make($logData, [
-                'name' => 'required|string',
-                'user_id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            // 休憩時間と合計時間を計算
-            $breakStartTime = Carbon::parse($logData['break_start_time']);
-            $breakEndTime = Carbon::parse($logData['break_end_time']);
-            $logData['break_seconds'] = $breakEndTime->diffInSeconds($breakStartTime);
-
-            $existingRecord = Book::create($logData);
-
-            // 休憩時間と合計時間を計算
-            $existingRecord->calculateTotalHours();
-        }
-
-        return redirect()->back();
+    if (!$existingRecord) {
+        $existingRecord = new Book();
+        $existingRecord->name = $userName;
+        $existingRecord->login_date = $today;
+        $existingRecord->user_id = $userId;
+        $existingRecord->save();
     }
-    
+
+    // ボタンのアクションに応じてデータを更新
+    switch ($action) {
+        case 'startWork':
+            if (!$existingRecord->start_time) {
+                \Log::info('Starting work for user: ' . $userName . ' at ' . now());
+                $existingRecord->start_time = now();
+            }
+            break;
+        case 'endWork':
+            if (!$existingRecord->end_time) {
+                \Log::info('Ending work for user: ' . $userName . ' at ' . now());
+                $existingRecord->end_time = now();
+            }
+            break;
+        case 'startBreak':
+            // 2回目以降の休憩開始は新しいレコードに追加
+            $breakRecord = new Book();
+            $breakRecord->name = $userName;
+            $breakRecord->login_date = $today;
+            $breakRecord->user_id = $userId;
+            $breakRecord->break_start_time = now();
+            $breakRecord->save();
+            break;
+        case 'endBreak':
+            // 2回目の休憩終了は2回目の休憩開始を取得したレコードに追加
+            $lastBreakRecord = Book::where('name', $userName)
+                ->where('login_date', $today)
+                ->whereNotNull('break_start_time')
+                ->whereNull('break_end_time')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($lastBreakRecord) {
+                \Log::info('Ending break for user: ' . $userName . ' at ' . now());
+                $lastBreakRecord->break_end_time = now();
+                // 休憩時間の計算
+                $breakStartTime = Carbon::parse($lastBreakRecord->break_start_time);
+                $breakEndTime = Carbon::parse($lastBreakRecord->break_end_time);
+                $breakSeconds = $breakEndTime->diffInSeconds($breakStartTime);
+                $lastBreakRecord->break_seconds = $breakSeconds;
+                $lastBreakRecord->save();
+            }
+            break;
+    }
+
+    $existingRecord->save();
+
+    return redirect()->back();
+}
 }
