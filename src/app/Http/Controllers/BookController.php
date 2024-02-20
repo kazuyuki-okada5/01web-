@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\NewBook; // 新しいモデルを追加
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+
 
 class BookController extends Controller
 {
@@ -24,16 +26,34 @@ class BookController extends Controller
         $this->middleware('auth');
     }
 
+    public function index() // index メソッドを追加
+    {
+        $userName = auth()->user()->name;
+
+        return view('your-view', compact('userName'));
+    }
+
     public function stamp()
     {
         // 現在のレコードを取得
         $existingRecord = $this->getExistingRecord();
 
-        // ボタンの状態を決定
-        $startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
-        $endButtonDisabled = (!$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null || $existingRecord->break_start_time !== null || $existingRecord->break_end_time !== null) && $existingRecord->end_time !== null;
-        $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null;
-        $breakEndButtonDisabled = !$existingRecord || $existingRecord->break_start_time === null;
+        // ユーザー名を取得
+    $userName = auth()->user()->name;
+    $today = now()->toDateString();
+
+        // 勤務開始ボタンの状態
+$startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
+
+// 勤務終了ボタンの状態
+$endButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+
+// 休憩開始ボタンの状態
+$breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+
+// 休憩終了ボタンの状態
+$breakEndButtonDisabled = false;
+
 
         return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
     }
@@ -145,34 +165,33 @@ class BookController extends Controller
             }
             break;
         case 'startBreak':
-            // 2回目以降の休憩開始は新しいレコードに追加
-            $breakRecord = new Book();
-            $breakRecord->name = $userName;
-            $breakRecord->login_date = $today;
-            $breakRecord->user_id = $userId;
-            $breakRecord->break_start_time = now();
-            $breakRecord->save();
-            break;
-        case 'endBreak':
-            // 2回目の休憩終了は2回目の休憩開始を取得したレコードに追加
-            $lastBreakRecord = Book::where('name', $userName)
-                ->where('login_date', $today)
-                ->whereNotNull('break_start_time')
-                ->whereNull('break_end_time')
-                ->orderBy('created_at', 'desc')
-                ->first();
+    // 休憩開始はNewBookテーブルに追加
+    $breakRecord = new NewBook();
+    $breakRecord->name = $userName;
+    $breakRecord->login_date = $today;
+    $breakRecord->user_id = $userId;
+    $breakRecord->break_start_time = now();
+    $breakRecord->save();
+    break;
+case 'endBreak':
+    // 休憩終了はNewBookテーブルに追加
+    $lastBreakRecord = NewBook::where('name', $userName)
+        ->where('login_date', $today)
+        ->whereNotNull('break_start_time')
+        ->whereNull('break_end_time')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-            if ($lastBreakRecord) {
-                \Log::info('Ending break for user: ' . $userName . ' at ' . now());
-                $lastBreakRecord->break_end_time = now();
-                // 休憩時間の計算
-                $breakStartTime = Carbon::parse($lastBreakRecord->break_start_time);
-                $breakEndTime = Carbon::parse($lastBreakRecord->break_end_time);
-                $breakSeconds = $breakEndTime->diffInSeconds($breakStartTime);
-                $lastBreakRecord->break_seconds = $breakSeconds;
-                $lastBreakRecord->save();
-            }
-            break;
+    if ($lastBreakRecord) {
+        $lastBreakRecord->break_end_time = now();
+        // 休憩時間の計算
+        $breakStartTime = Carbon::parse($lastBreakRecord->break_start_time);
+        $breakEndTime = Carbon::parse($lastBreakRecord->break_end_time);
+        $breakSeconds = $breakEndTime->diffInSeconds($breakStartTime);
+        $lastBreakRecord->break_seconds = $breakSeconds;
+        $lastBreakRecord->save();
+    }
+    break;
     }
 
     $existingRecord->save();
