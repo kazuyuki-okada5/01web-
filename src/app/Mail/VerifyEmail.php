@@ -20,6 +20,7 @@ class VerifyEmail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.verify');
+        return $this->subject('メール確認')
+                    ->view('emails.verify');
     }
 }

@@ -21,24 +21,23 @@ class Book extends Model
         'total_seconds',
     ];
 
+    public function getEndTimeAttribute($value)
+    {
+        // 時刻をそのまま取得する
+        return $value;
+    }
 
-public function getEndTimeAttribute($value)
-{
-    // 時刻をそのまま取得する
-    return $value;
-}
+    public function getBreakStartTimeAttribute($value)
+    {
+        // 時刻をそのまま取得する
+        return $value;
+    }
 
-public function getBreakStartTimeAttribute($value)
-{
-    // 時刻をそのまま取得する
-    return $value;
-}
-
-public function getBreakEndTimeAttribute($value)
-{
-    // 時刻をそのまま取得する
-    return $value;
-}
+    public function getBreakEndTimeAttribute($value)
+    {
+        // 時刻をそのまま取得する
+        return $value;
+    }
 
     public $timestamps = true;
 
@@ -53,52 +52,63 @@ public function getBreakEndTimeAttribute($value)
     }
 
     protected static function boot()
-{
-    parent::boot();
+    {
+        parent::boot();
 
-    static::saving(function ($book) {
-        $book->calculateTotalHours();
-    });
-}
-
-    
-
+        static::saving(function ($book) {
+            $book->calculateTotalHours();
+            $book->calculateTotalBreakSeconds();
+        });
+    }
 
     public function calculateTotalHours()
-{
-    if ($this->start_time && $this->end_time && $this->break_start_time && $this->break_end_time) {
-        $start = strtotime($this->start_time);
-        $end = strtotime($this->end_time);
-        $breakStart = strtotime($this->break_start_time);
-        $breakEnd = strtotime($this->break_end_time);
+    {
+        if ($this->start_time && $this->end_time && $this->break_start_time && $this->break_end_time) {
+            $start = strtotime($this->start_time);
+            $end = strtotime($this->end_time);
+            $breakStart = strtotime($this->break_start_time);
+            $breakEnd = strtotime($this->break_end_time);
 
-        // break_hours および total_hours を break_seconds および total_seconds に修正
-        $breakSeconds = $breakEnd - $breakStart;
-        $totalSeconds = $end - $start - $breakSeconds;
+            // break_seconds および total_seconds を計算する
+            $breakSeconds = $breakEnd - $breakStart;
+            $totalSeconds = $end - $start - $breakSeconds;
 
-        // 修正: total_seconds の値を更新
-        $this->setAttribute('total_seconds', $totalSeconds);
+            // total_seconds の値を更新
+            $this->setAttribute('total_seconds', $totalSeconds);
+        }
     }
-}
+
+    public function calculateTotalBreakSeconds()
+    {
+        if ($this->break_start_time && $this->break_end_time) {
+            $breakStart = strtotime($this->break_start_time);
+            $breakEnd = strtotime($this->break_end_time);
+
+            // break_seconds を計算して設定
+            $breakSeconds = $breakEnd - $breakStart;
+            $this->setAttribute('break_seconds', $breakSeconds);
+        }
+    }
+
     // アクセサ: 休憩時間を「h:m:s」のフォーマットに変換
-public function getBreakHoursFormattedAttribute()
-{
-    return $this->formatTime($this->break_seconds);
-}
+    public function getBreakHoursFormattedAttribute()
+    {
+        return $this->formatTime($this->break_seconds);
+    }
 
-// アクセサ: 合計時間を「H:M:S」のフォーマットに変換
-public function getTotalHoursFormattedAttribute()
-{
-    return $this->formatTime($this->total_seconds);
-}
+    // アクセサ: 合計時間を「H:M:S」のフォーマットに変換
+    public function getTotalHoursFormattedAttribute()
+    {
+        return $this->formatTime($this->total_seconds);
+    }
 
-// 秒を「H:M:S」のフォーマットに変換するヘルパー関数
-private function formatTime($seconds)
-{
-    $hours = floor($seconds / 3600);
-    $minutes = floor(($seconds % 3600) / 60);
-    $seconds = $seconds % 60;
+    // 秒を「H:M:S」のフォーマットに変換するヘルパー関数
+    private function formatTime($seconds)
+    {
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
 
-    return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-}
+        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    }
 }

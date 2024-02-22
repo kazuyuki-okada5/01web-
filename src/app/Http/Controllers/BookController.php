@@ -54,7 +54,19 @@ $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === 
 // 休憩終了ボタンの状態
 $breakEndButtonDisabled = false;
 
+// 対応するレコードを取得するクエリ
+    $records = Book::select('books.*', 'new_books.break_seconds')
+        ->join('new_books', function ($join) use ($userName, $today) {
+            $join->on('books.name', '=', 'new_books.name')
+                ->where('books.login_date', '=', 'new_books.login_date')
+                ->where('books.name', '=', $userName)
+                ->where('books.login_date', '=', $today);
+        })
+        ->get();
 
+    // break_seconds 列の値を合算
+    $totalBreakSeconds = $records->sum('break_seconds');
+    
         return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
     }
 
