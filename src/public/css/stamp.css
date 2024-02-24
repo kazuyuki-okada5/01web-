@@ -1,9 +1,8 @@
 .stamp__content {
     max-width: 100%;
     /* 必要に応じて幅を調整 */
-    height: 800px;
+    height: auto;
     /* コンテンツに基づいて高さを自動調整 */
-    margin-bottom: 0; /* マージンを無効化 */
     padding: 60px;
     box-sizing: border-box;
     display: flex;
@@ -11,42 +10,77 @@
     align-items: center;
     background-color: #f0f0f0;
 }
-.button-container {
-    max-width: 100%;
-    height: 230px;
-    white-space: nowrap;
-        /* 適切な値に調整してください */
-        /* 適切な値に調整してください */
-        padding: 10px;
-        /* 適切な値に調整してください */
-        margin: 0 auto;
-        /* 中央寄せする場合 */
-}
-.button-container form {
-    margin-bottom: 3px;
-    /* 適切な値に調整してください */
-}
-.button-container form button{
-    font-size: 16px;
-    padding: 80px 200px;
-    /* ボタンの高さと幅を調整する */
-    margin: 25px;
-    cursor: pointer;
-    border: 2px solid #ffffff;
-    /* ボーダーの変更 */
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border-radius: 5px;
-    /* 角を丸くする */
+
+/* ユーザー名のスタイル */
+.stamp-user p {
+    font-size: 24px;
+    /* テキストのサイズを変更する */
 }
 
-.button-container form button:hover{
-    background-color: #f9f9f9;
-    /* ホバー時の背景色の変更 */
+/* スタンプボタンコンテナのスタイル */
+.stamp-button-container {
+    max-width: 100%;
+    /* コンテナの幅を最大まで広げる */
+    padding: 10px;
+    /* 内側の余白を追加 */
+    margin: 0 auto;
+    /* 左右の余白を自動的に設定してコンテナを中央に配置 */
+    display: flex;
+    /* 内部の要素を横並びに配置 */
+    justify-content: center;
+    /* 内部の要素を水平方向に中央寄せ */
 }
-.button-container form button:disabled {
-    background-color: rgb(227, 227, 227);
-    /* 無効時の背景色 */
-    color: rgb(169, 169, 169);
-    /* 無効時のテキスト色 */
+
+/* フォームのスタイル */
+.stamp-button-container form {
+    margin-bottom: 10px;
+    /* フォーム間のマージンを追加 */
+}
+
+/* ボタンのスタイル */
+.stamp-button-container button {
+    font-size: 20px;
+    /* ボタンのテキストサイズを大きくする */
+    padding: 80px 200px;
+    /* 上下左右のパディングを大きくする */
+    margin: 20px;
+    /* ボタン間の余白を設定 */
+    cursor: pointer;
+    /* ボタンにポインターを表示 */
+    border: 2px solid #ffffff;
+    /* ボタンの枠線を設定 */
+    background-color: #ffffff;
+    /* ボタンの背景色を設定 */
+    color: #000;
+    /* ボタンのテキスト色を設定 */
+    border-radius: 5px;
+    /* ボタンの角を丸める */
+    margin-top: 5px;
+    /* 上部のマージンを追加 */
+    margin-bottom: 5px;
+    /* 下部のマージンを追加 */
+}
+
+/* レスポンシブデザインのためのメディアクエリ */
+@media (max-width: 768px) {
+    .stamp-button-container form button {
+        font-size: 14px;
+        /* 幅が狭い場合はフォントサイズを小さくする */
+        padding: 10px 20px;
+        /* 幅が狭い場合はパディングを少なくする */
+    }
+}
+
+/* ホバー時のスタイル */
+.stamp-button-container button:hover {
+    background-color: #f9f9f9;
+    /* ホバー時の背景色を設定 */
+}
+
+/* 無効時のスタイル */
+.stamp-button-container button:disabled {
+    background-color: #ffffff;
+    /* 無効時の背景色を設定 */
+    color: #e3dfdf;
+    /* 無効時のテキスト色を設定 */
 }

@@ -1,83 +1,132 @@
+/* CSSファイルの読み込み */
 .header {
     background-color: #ffffff;
+    /* ヘッダーの背景色 */
+    padding: 10px;
+    /* パディングを追加 */
 }
 
+
+
+/* ヘッダー内の要素 */
 .header__inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
 }
 
+/* ヘッダーユーティリティ */
 .header-utilities {
-    display: flex;
-    align-items: center;
+    margin-right: 10px;
+    /* ヘッダーユーティリティの右側のマージンを追加 */
 }
 
 .header-utilities p {
     margin: 0;
+    font-size: 30px;
+    /* テキストのサイズを変更 */
+    font-weight: bold;
+        /* テキストを太字にする */
+    margin-left: 40px;
+        /* テキストを右側に移動 */
 }
 
+/* ヘッダーボタン */
 .header-button {
+    display: flex;
+    /* 要素を水平に配置する */
+    align-items: center;
+    /* 子要素を垂直方向に中央揃えする */
+}
+
+.header-button form,
+.header-button .button-container {
+    margin-left: 0px;
+    /* 要素間の隙間を設定 */
+}
+
+/* ログアウトボタンのスタイル */
+/* ログアウトボタンのスタイル */
+.header-nav__button {
+    background-color: #ffffff;
+    /* 背景色を白色に設定 */
+    border: none;
+    /* 枠を消す */
+    font-weight: bold;
+    /* テキストを太字にする */
+    cursor: pointer;
+    /* ホバー時にマウスカーソルを指に変更 */
+    font-size: 16px;
+        /* 文字サイズを変更 */
+}
+
+/* ボタンスタイル */
+.header-button .button {
+    margin-left: 10px;
+    border: 2px solid #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+        /* 黒色に変更 */
+    text-decoration: none;
+        /* アンダーラインを削除 */
+    font-weight: bold;
+        /* テキストを太字にする */
+    }
+
+
+/* ボタンコンテナのスタイル */
+.button-container {
     display: flex;
 }
 
-.header-button .button {
-    margin-left: 10px;
-    /* ボタンとボタンの間に余白を設定 */
-    /* ボタンのスタイルを設定 */
-    border: 2px solid #ffffff;
-    /* ボーダーの変更 */
-    background-color: #ffffff;
+.button-container a {
+    margin-right: 30px;
+    /* 各リンクの右側の余白を10pxに設定 */
 }
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            /* 左右に均等に配置 */
-            align-items: center;
-            /* 上下に中央配置 */
-            height: 100vh;
-            /* 画面の高さいっぱいに広がるように */
-        }
-    
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* 左右に中央配置 */
-            justify-content: space-between;
-            /* 上下に均等に配置 */
-            height: 50%;
-            /* 親要素の高さの半分に */
-            width: 50%;
-            /* 親要素の幅の半分に */
-        }
-    
-        .atte_button {
-            /* ボタンのスタイリング（任意のスタイルを追加） */
-            margin: 5px;
-            padding: 10px;
-            text-align: center;
-            background-color: #3490dc;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 5px;
-            display: block;
-            width: 100%;
-        }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+/* ボタングループ */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 50%;
+    width: 50%;
+}
+
+/* Atteボタン */
+.atte_button {
+    margin: 5px;
+    padding: 10px;
     text-align: center;
-    padding: 5px;
-    line-height: 5vh;
-    background-color: #ffffff;
+    background-color: #3490dc;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
 }
 
+/* フッター */footer {
+    background-color: #ffffff;
+    /* フッターの背景色 */
+    color: #000000;
+    /* テキストの色を白色に設定 */
+    padding: 15px;
+    /* パディングを追加 */
+    text-align: center;
+    /* テキストを中央揃えにする */
+}
+
+/* フッターテキスト */
 footer p {
     font-size: 16px;
     margin: 0;
+}
+/* メディアクエリ */
+@media screen and (max-width: 768px) {
+    .header__inner {
+        flex-direction: column;
+        /* 画面が狭い場合は縦方向に配置 */
+    }
 }

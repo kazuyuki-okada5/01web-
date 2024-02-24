@@ -8,6 +8,7 @@ use App\Models\NewBook; // 新しいモデルを追加
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\Models\TotalBreakSeconds;
 
 
 class BookController extends Controller
@@ -30,7 +31,13 @@ class BookController extends Controller
     {
         $userName = auth()->user()->name;
 
-        return view('your-view', compact('userName'));
+        // Booksテーブルからデータを取得
+        $books = Book::all();
+
+        // TotalBreakSecondsテーブルからデータを取得
+        $totalBreakSeconds = TotalBreakSeconds::all();
+
+        return view('books.index', compact('books', 'totalBreakSeconds'));
     }
 
     public function stamp()

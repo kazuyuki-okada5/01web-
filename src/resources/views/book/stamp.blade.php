@@ -5,15 +5,20 @@
 @endsection
 
 @section('content')
-<body>
     <div class="stamp__content">
-        @if (auth()->check())
-            <p>{{ auth()->user()->name }} さんお疲れ様です！</p>
-        @endif
+        <!-- ログインしている場合に挨拶を表示 -->
+        <div class="stamp-user">
+            @if (auth()->check())
+                <p>{{ auth()->user()->name }} さんお疲れ様です！</p>
+            @endif
+        </div>
+
         <br>
+        <!-- メッセージを表示する領域 -->
         <div id="message"></div>
 
-        <div class="button-container">
+        <!-- ボタンコンテナ -->
+        <div class="stamp-button-container">
             <!-- 勤務開始フォーム -->
             <form method="post" action="{{ route('log-activity', ['action' => 'startWork']) }}">
                 @csrf
@@ -27,8 +32,9 @@
             </form>
         </div>
 
-        <!-- 休憩開始フォーム -->
-        <div class="button-container">
+        <!-- ボタンコンテナ -->
+        <div class="stamp-button-container">
+            <!-- 休憩開始フォーム -->
             <form method="post" action="{{ route('log-activity', ['action' => 'startBreak']) }}">
                 @csrf
                 <button type="submit" {{ $breakStartButtonDisabled ? 'disabled' : '' }} class="{{ $breakStartButtonDisabled ? 'disabled-button' : '' }}">休憩開始</button>
@@ -41,5 +47,4 @@
             </form>
         </div>
     </div>
-</body>
 @endsection

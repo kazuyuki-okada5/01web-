@@ -7,6 +7,7 @@ use App\Http\Controllers\ListController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Models\Book;
 use App\Http\Controllers\UserListController;
+use App\Http\Controllers\TotalBreakSecondController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [BookController::class, 'stamp']);
@@ -37,3 +38,4 @@ Route::get('/email/verify', [VerificationController::class, 'show'])->name('veri
 Route::get('/email/verify/{id}', [VerificationController::class, 'verify']);
 Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::get('/calculate-total-break-seconds', [TotalBreakSecondController::class, 'calculateAndSaveTotalBreakSeconds']);
