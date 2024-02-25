@@ -8,17 +8,21 @@ p {
     font-size: 30px;
 }
 
+/* フッター */
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    background-color: #ffffff;
+    /* フッターの背景色 */
+    color: #000000;
+    /* テキストの色を白色に設定 */
+    padding: 1px;
+    /* パディングを追加 */
     text-align: center;
-    padding: 5px;
-    line-height: 2vh;
+    /* テキストを中央揃えにする */
 }
 
+/* フッターテキスト */
 footer p {
     font-size: 16px;
     margin: 0;
 }
+

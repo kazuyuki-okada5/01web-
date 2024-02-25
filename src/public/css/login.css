@@ -1,7 +1,7 @@
 .login__content {
     max-width: 100%;
     /* 必要に応じて幅を調整 */
-    height: 900px;
+    height: 700px;
     /* コンテンツに基づいて高さを自動調整 */
     margin: 0 auto;
     padding: 60px;
@@ -30,9 +30,11 @@
 .form__input--text input {
     width: 400px;
     padding: 15px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     background-color: #f0f0f0;
     border-radius: 4px;
+    font-weight: bold;
+        /* テキストを太くする */
 }
 
 .form__button-submit {
@@ -57,7 +59,10 @@
     /* 例: 赤色に変更 */
 }
 
+
 .register__link .register__button-submit {
     color: #0000FF;
-    /* 例: 青色に変更 */
+    /* リンクの色を設定 */
+    text-decoration: none;
+    /* 下線を削除 */
 }

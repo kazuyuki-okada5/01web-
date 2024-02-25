@@ -66,5 +66,5 @@
     <div class="login__link">
         <a class="login__button-submit" href="/login">ログイン</a>
     </div>
-    </div>
+</div>
 @endsection

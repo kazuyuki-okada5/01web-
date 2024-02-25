@@ -43,6 +43,8 @@
 .header-button .button-container {
     margin-left: 0px;
     /* 要素間の隙間を設定 */
+    white-space: nowrap;
+        /* テキストを折り返さないようにする */
 }
 
 /* ログアウトボタンのスタイル */
@@ -58,6 +60,8 @@
     /* ホバー時にマウスカーソルを指に変更 */
     font-size: 16px;
         /* 文字サイズを変更 */
+    white-space: nowrap;
+        /* テキストを折り返さないようにする */
 }
 
 /* ボタンスタイル */

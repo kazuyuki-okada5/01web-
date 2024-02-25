@@ -1,0 +1,129 @@
+body {
+    background-color: #f0f0f0;
+    /* 任意の背景色を指定 */
+}
+
+.attendees__content {
+    max-width: 100%;
+    /* 必要に応じて幅を調整 */
+    height: 800px;
+    /* コンテンツに基づいて高さを自動調整 */
+    margin: 0 auto;
+    padding: 60px;
+}
+
+.attendess_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 20px;
+}
+
+.date-navigation {
+    text-align: center;
+    /* テキストを中央に配置 */
+    height: 50px;
+    /* 高さを指定 */
+    display: flex;
+    /* 子要素をフレックスボックスとして配置 */
+    justify-content: center;
+    /* 子要素を水平方向中央に配置 */
+    align-items: center;
+    /* 子要素を垂直方向中央に配置 */
+}
+
+.date-navigation span {
+    width: 100px;
+    /* 幅を指定 */
+    display: inline-block;
+    /* インラインブロック要素として表示 */
+    text-align: center;
+    /* テキストを中央に配置 */
+    vertical-align: middle;
+    /* テキストを垂直方向中央に配置 */
+    text-decoration: none;
+    /* リンクの下線を削除 */
+}
+
+.link-arrow-container {
+    text-align: center;
+    /* テキストを中央に配置 */
+}
+
+.link-arrow {
+    background-color: #ffffff;
+    /* 背景色を設定 */
+    padding: 3px 10px;
+    /* 必要に応じてパディングを調整 */
+    border-radius: 3px;
+    /* 角を丸くする */
+    border: 1px solid #2530ff;
+    /* 外枠の設定 */
+    margin: 0 20px;
+    /* 左右のマージンを10pxに設定 */
+    display: inline-block;
+    /* インラインブロック要素として表示 */
+    text-decoration: none;
+    /* リンクの下線を削除 */
+}
+
+.link-arrow:hover {
+    background-color: #ccc;
+    /* ホバー時の背景色を変更 */
+}
+
+.attendees__content {
+    max-width: 100%;
+    /* 必要に応じて幅を調整 */
+    height: 800px;
+
+    padding: 60px;
+    background-color: #f0f0f0;
+}
+
+.attendees__list {
+    text-align: center;
+    /* テーブル行内の要素を中央揃えにする */
+}
+
+.attendees_table {
+    margin: 0 auto;
+    /* テーブルを水平方向に中央配置 */
+}
+
+.item_tr {
+    text-align: center;
+    /* テーブル行内の要素を中央揃えにする */
+}
+
+.item_th {
+    padding: 20px 50px;
+    text-align: center;
+    /* テーブルヘッダーのテキストを中央揃えにする */
+    border-bottom: 1px solid #ddd;
+    background-color: #f2f2f2;
+    border-top: 1px solid #ddd;
+    width: auto;
+    /* セルの幅を自動にする */
+    margin: 0 10px;
+    /* テーブルヘッダーを水平方向に中央に配置 */
+    font-size: 20px;
+    /* テキストサイズを変更 */
+}
+
+.attendees_table th {
+    padding: 20px;
+    /* テーブルヘッダーの左右のパディングを設定 */
+    text-align: center;
+    /* テーブル行内の要素を中央揃えにする */
+}
+
+.info_td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.info_tr:last-child .info_td {
+    border-bottom: none;
+    /* 最後の行の横線を消す */
+}

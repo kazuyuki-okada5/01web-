@@ -6,13 +6,18 @@
 @endsection
 
 @section('content')
-<<div class="date-navigation">
-    <a href="{{ route('attendees.move.date', ['direction' => 'prev', 'currentDate' => $currentDate]) }}">前日</a>
-<span>{{ $currentDate }}</span>
-<a href="{{ route('attendees.move.date', ['direction' => 'next', 'currentDate' => $currentDate]) }}">翌日</a>
+    <div class="date-navigation">
+    <div class="link-arrow-container">
+        <a href="{{ route('attendees.move.date', ['direction' => 'prev', 'currentDate' => $currentDate]) }}" class="link-arrow">＜</a>
+    </div>
+    <span>{{ $currentDate }}</span>
+    <div class="link-arrow-container">
+        <a href="{{ route('attendees.move.date', ['direction' => 'next', 'currentDate' => $currentDate]) }}" class="link-arrow">＞</a>
+    </div>
 </div>
 
     <div class="attendees__content">
+        <div class="attendees__list">
         <table class="attendees_table">
             <tr class="item_tr">
                 <th class="item_th">名前</th>
@@ -34,9 +39,11 @@
             @else
 @endif
         </table>
+        </div>
+    </div>
         @if ($books)
     <!-- $books 変数が null でない場合にのみ実行 -->
-    <div class="attendees__content">
+    <div class="attendees__coment">
         <!-- データの表示や処理 -->
         {{ $books->withQueryString()->links() }}
     </div>

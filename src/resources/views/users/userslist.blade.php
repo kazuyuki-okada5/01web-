@@ -1,7 +1,7 @@
 @extends('layouts.secondapp')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/attendees.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/userslist.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 @endsection
 
@@ -53,4 +53,5 @@
         </div>
     </div>
 </body>
+
 @endsection
