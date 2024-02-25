@@ -21,7 +21,7 @@ body {
 
 /* フォーム全体を左寄せに配置 */
 form {
-    text-align: left;
+    text-align: center;
 }
 
 /* 入力フィールドのスタイル */
@@ -82,9 +82,13 @@ button[type="submit"]:hover {
     /* テーブルヘッダーを水平方向に中央に配置 */
     font-size: 20px;
     /* テキストサイズを変更 */
+    white-space: nowrap;
+    /* テキストの折り返しを禁止 */
+    overflow: hidden;
+    /* テキストのオーバーフローを隠す */
+    text-overflow: ellipsis;
+    /* テキストがオーバーフローした場合に省略記号（...）を表示 */
 }
-
-
 
 .info_td {
     padding: 20px;
