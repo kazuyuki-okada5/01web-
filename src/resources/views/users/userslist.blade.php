@@ -8,11 +8,11 @@
 @section('content')
 <body>
     <div class="stamp__content">
-        @if (!empty($keyword))
-            <p>{{ $keyword }} さんの勤務履歴</p>
-        @elseif(auth()->check())
-            <p>{{ auth()->user()->name }} さんの勤務履歴</p>
-        @endif
+        <div class="stamp__name">
+            @if(auth()->check())
+                <p>{{ auth()->user()->name }} さんの勤務履歴</p>
+            @endif
+        </div>
         <br>
         <!-- 検索フォームを追加 -->
         <form action="{{ route('users.index') }}" method="GET">
@@ -53,5 +53,4 @@
         </div>
     </div>
 </body>
-
 @endsection

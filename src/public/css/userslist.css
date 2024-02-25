@@ -3,7 +3,7 @@ body {
     /* 任意の背景色を指定 */
 }
 
-.attendees__content {
+.stamp__content {
     max-width: 100%;
     /* 必要に応じて幅を調整 */
     height: 800px;
@@ -12,87 +12,61 @@ body {
     padding: 60px;
 }
 
-.attendess_table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 20px;
-}
-
-.date-navigation {
+.stamp__name {
     text-align: center;
     /* テキストを中央に配置 */
-    height: 50px;
-    /* 高さを指定 */
-    display: flex;
-    /* 子要素をフレックスボックスとして配置 */
-    justify-content: center;
-    /* 子要素を水平方向中央に配置 */
-    align-items: center;
-    /* 子要素を垂直方向中央に配置 */
+    font-size: 24px;
+        /* 文字サイズを16ピクセルに設定 */
 }
 
-.date-navigation span {
-    width: 100px;
+/* フォーム全体を左寄せに配置 */
+form {
+    text-align: left;
+}
+
+/* 入力フィールドのスタイル */
+input[type="text"] {
+    padding: 10px;
+    /* 上下左右のパディングを設定 */
+    width: 360px;
     /* 幅を指定 */
-    display: inline-block;
-    /* インラインブロック要素として表示 */
-    text-align: center;
-    /* テキストを中央に配置 */
-    vertical-align: middle;
-    /* テキストを垂直方向中央に配置 */
-    text-decoration: none;
-    /* リンクの下線を削除 */
-}
-
-.link-arrow-container {
-    text-align: center;
-    /* テキストを中央に配置 */
-}
-
-.link-arrow {
-    background-color: #ffffff;
-    /* 背景色を設定 */
-    padding: 3px 10px;
-    /* 必要に応じてパディングを調整 */
-    border-radius: 3px;
+    border: 1px solid #ccc;
+    /* 枠線のスタイル */
+    border-radius: 5px;
     /* 角を丸くする */
-    border: 1px solid #2530ff;
-    /* 外枠の設定 */
-    margin: 0 20px;
-    /* 左右のマージンを10pxに設定 */
-    display: inline-block;
-    /* インラインブロック要素として表示 */
-    text-decoration: none;
-    /* リンクの下線を削除 */
+    box-sizing: border-box;
+    /* 幅や高さにpaddingとborderを含める */
 }
 
-.link-arrow:hover {
-    background-color: #ccc;
-    /* ホバー時の背景色を変更 */
+/* ボタンのスタイル */
+button[type="submit"] {
+    padding: 10px 20px;
+    /* 上下左右のパディングを設定 */
+    background-color: #007bff;
+    /* 背景色を指定 */
+    color: #fff;
+    /* 文字色を指定 */
+    border: none;
+    /* 枠線をなくす */
+    border-radius: 5px;
+    /* 角を丸くする */
+    cursor: pointer;
+    /* ポインターを表示 */
+    transition: background-color 0.3s;
+    /* ホバー時のトランジション効果 */
 }
 
-.attendees__content {
-    max-width: 100%;
-    /* 必要に応じて幅を調整 */
-    height: 800px;
-
-    padding: 60px;
-    background-color: #f0f0f0;
+/* ボタンのホバー時のスタイル */
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    /* ホバー時の背景色を指定 */
 }
 
-.attendees__list {
-    text-align: center;
-    /* テーブル行内の要素を中央揃えにする */
-}
-
-.attendees_table {
+.users.list_table {
     margin: 0 auto;
-    /* テーブルを水平方向に中央配置 */
-}
-
-.item_tr {
+    /* 左右のマージンを自動に設定して水平中央に配置 */
     text-align: center;
-    /* テーブル行内の要素を中央揃えにする */
+    /* テキストを中央揃えにする */
 }
 
 .item_th {
@@ -110,16 +84,11 @@ body {
     /* テキストサイズを変更 */
 }
 
-.attendees_table th {
-    padding: 20px;
-    /* テーブルヘッダーの左右のパディングを設定 */
-    text-align: center;
-    /* テーブル行内の要素を中央揃えにする */
-}
+
 
 .info_td {
     padding: 20px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
