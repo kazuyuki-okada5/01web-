@@ -25,14 +25,4 @@ class NewBook extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    // TotalBreakSecondsモデルとのリレーションを定義
-    public function totalBreakSeconds()
-    {
-        return $this->hasOne(TotalBreakSeconds::class, 'user_id', 'user_id')
-            ->where('name', $this->name) // nameカラムが一致する条件を追加
-            ->where('login_date', $this->login_date) // login_dateカラムが一致する条件を追加
-            ->selectRaw('SUM(total_break_seconds) as total_break_seconds') // total_break_secondsカラムの合計を取得
-            ->groupBy('user_id', 'name', 'login_date'); // グループ化して集計
-    }
 }

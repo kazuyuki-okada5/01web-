@@ -18,21 +18,21 @@ Route::prefix('book')->group(function () {
     Route::post('/', [BookController::class, 'create']);
 });
 
-Route::get('/users_list', [UserListController::class, 'index'])->name('users.index');
-
-
-Route::post('/log-activity/{action}', [BookController::class, 'logActivity'])->name('log-activity');
-Route::resource('books', 'BookController');
-
-Route::get('/lists', [ListController::class, 'index']);
-Route::resource('lists', ListController::class);
-
 Route::get('/attendees/{date}', 'BookController@getAttendeesByDate')->name('attendees.by.date');
 Route::get('/attendees/move/{direction}/{currentDate}', 'BookController@moveDate')->name('attendees.move.date');
 Route::get('/attendees/date/{currentDate}', 'BookController@showByDate')->name('attendees.showByDate');
 Route::get('/attendees', [ListController::class, 'index'])->name('attendees.index');
 Route::get('/attendees/move/{direction}/{currentDate}', [ListController::class, 'moveDate'])->name('attendees.move.date');
 Route::get('/attendees/date/{currentDate}', [ListController::class, 'showByDate'])->name('attendees.showByDate');
+
+
+Route::post('/log-activity/{action}', [BookController::class, 'logActivity'])->name('log-activity');
+Route::resource('books', 'BookController');
+
+Route::get('/lists', [ListController::class, 'index']);
+Route::get('/users_list', [UserListController::class, 'index'])->name('users.index');
+
+
 
 Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/verify/{id}', [VerificationController::class, 'verify']);
