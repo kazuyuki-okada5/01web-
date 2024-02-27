@@ -38,7 +38,18 @@
                             <td class="info_td">{{ $book->login_date }}</td>
                             <td class="info_td">{{ \Carbon\Carbon::parse($book->start_time)->format('H:i:s') }}</td>
                             <td class="info_td">{{ $book->end_time }}</td>
-                            <td class="info_td">{{ $book->break_hours_formatted }}</td>
+                             <td class="info_td">
+            @php
+                // 秒数を時間に変換する
+                $totalSeconds = $book->totalBreakSeconds->total_break_seconds;
+                $hours = floor($totalSeconds / 3600);
+                $minutes = floor(($totalSeconds % 3600) / 60);
+                $seconds = $totalSeconds % 60;
+                // 時間を "h:m:s" 形式にフォーマットする
+                $formattedTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+            @endphp
+            {{ $formattedTime }}
+        </td>
                             <td class="info_td">{{ $book->total_hours_formatted }}</td>
                         </tr>
                     @endforeach
