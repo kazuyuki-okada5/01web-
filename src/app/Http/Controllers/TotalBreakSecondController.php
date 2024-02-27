@@ -13,7 +13,10 @@ class TotalBreakSecondController extends Controller
     try {
         // NewBookテーブルからデータを取得し、リレーションを使って合計値を取得
         $newBooks = NewBook::all();
-        dd($newBooks); // デバッグ: 変数 $newBooks の値を確認する
+
+        // クエリログを有効にする
+        \Illuminate\Support\Facades\DB::enableQueryLog();
+
         foreach ($newBooks as $newBook) {
             $totalBreakSeconds = $newBook->totalBreakSeconds ? $newBook->totalBreakSeconds->total_break_seconds : 0;
 
@@ -25,6 +28,9 @@ class TotalBreakSecondController extends Controller
                 'total_break_seconds' => $totalBreakSeconds
             ]);
         }
+
+        // クエリログを出力
+        dd(\Illuminate\Support\Facades\DB::getQueryLog());
     } catch (\Exception $e) {
         // エラーハンドリング: エラーが発生した場合の処理
         \Log::error('Error in calculateAndSaveTotalBreakSeconds: ' . $e->getMessage());

@@ -18,6 +18,7 @@ class CreateNewBooksTable extends Migration
                 $table->time('break_start_time')->nullable();
                 $table->time('break_end_time')->nullable();
                 $table->integer('break_seconds')->nullable();
+                $table->integer('total_break_seconds')->nullable();
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->timestamps();
             });

@@ -8,8 +8,7 @@ use App\Models\NewBook; // 新しいモデルを追加
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-use App\Models\TotalBreakSeconds;
-
+use App\Models\TotalBreakSeconds; // TotalBreakSeconds モデルを追加
 
 class BookController extends Controller
 {
@@ -35,8 +34,8 @@ class BookController extends Controller
         $books = Book::all();
 
         // TotalBreakSecondsテーブルからデータを取得
-        $totalBreakSeconds = TotalBreakSeconds::all();
-
+        $user = auth()->user();
+        $totalBreakSeconds = TotalBreakSeconds::where('user_id', $user->id)->get();
         return view('books.index', compact('books', 'totalBreakSeconds'));
     }
 
@@ -46,35 +45,33 @@ class BookController extends Controller
         $existingRecord = $this->getExistingRecord();
 
         // ユーザー名を取得
-    $userName = auth()->user()->name;
-    $today = now()->toDateString();
+        $userName = auth()->user()->name;
+        $today = now()->toDateString();
 
-        // 勤務開始ボタンの状態
-$startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
+        // ボタンの状態を計算
+        $startButtonDisabled = !$existingRecord || $existingRecord->start_time !== null;
+        $endButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+        $breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+        $breakEndButtonDisabled = false;
 
-// 勤務終了ボタンの状態
-$endButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+        // 対応するレコードを取得するクエリ
+        $records = Book::select('books.*', 'new_books.break_seconds')
+            ->join('new_books', function ($join) use ($userName, $today) {
+                $join->on('books.name', '=', 'new_books.name')
+                    ->where('books.login_date', '=', 'new_books.login_date')
+                    ->where('books.name', '=', $userName)
+                    ->where('books.login_date', '=', $today);
+            })
+            ->get();
 
-// 休憩開始ボタンの状態
-$breakStartButtonDisabled = !$existingRecord || $existingRecord->start_time === null || $existingRecord->end_time !== null;
+        // break_seconds 列の値を合算
+        $totalBreakSeconds = $records->sum('break_seconds');
 
-// 休憩終了ボタンの状態
-$breakEndButtonDisabled = false;
+        // TotalBreakSeconds モデルを使用してデータを取得
+        $user = auth()->user();
+        $totalBreakSecondsFromDB = TotalBreakSeconds::where('user_id', $user->id)->get();
 
-// 対応するレコードを取得するクエリ
-    $records = Book::select('books.*', 'new_books.break_seconds')
-        ->join('new_books', function ($join) use ($userName, $today) {
-            $join->on('books.name', '=', 'new_books.name')
-                ->where('books.login_date', '=', 'new_books.login_date')
-                ->where('books.name', '=', $userName)
-                ->where('books.login_date', '=', $today);
-        })
-        ->get();
-
-    // break_seconds 列の値を合算
-    $totalBreakSeconds = $records->sum('break_seconds');
-    
-        return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled'));
+        return view('book.stamp', compact('startButtonDisabled', 'endButtonDisabled', 'breakStartButtonDisabled', 'breakEndButtonDisabled', 'totalBreakSecondsFromDB'));
     }
 
     // 現在のレコードを取得するメソッド
@@ -184,32 +181,49 @@ $breakEndButtonDisabled = false;
             }
             break;
         case 'startBreak':
-    // 休憩開始はNewBookテーブルに追加
-    $breakRecord = new NewBook();
-    $breakRecord->name = $userName;
-    $breakRecord->login_date = $today;
-    $breakRecord->user_id = $userId;
-    $breakRecord->break_start_time = now();
-    $breakRecord->save();
-    break;
-case 'endBreak':
+            // 休憩開始はNewBookテーブルに追加
+            $breakRecord = new NewBook();
+            $breakRecord->name = $userName;
+            $breakRecord->login_date = $today;
+            $breakRecord->user_id = $userId;
+            $breakRecord->break_start_time = now();
+            $breakRecord->save();
+            break;
+        case 'endBreak':
     // 休憩終了はNewBookテーブルに追加
-    $lastBreakRecord = NewBook::where('name', $userName)
-        ->where('login_date', $today)
-        ->whereNotNull('break_start_time')
-        ->whereNull('break_end_time')
-        ->orderBy('created_at', 'desc')
-        ->first();
+$lastBreakRecord = NewBook::where('name', $userName)
+    ->where('login_date', $today)
+    ->whereNotNull('break_start_time')
+    ->whereNull('break_end_time')
+    ->orderBy('created_at', 'desc')
+    ->first();
 
-    if ($lastBreakRecord) {
-        $lastBreakRecord->break_end_time = now();
-        // 休憩時間の計算
-        $breakStartTime = Carbon::parse($lastBreakRecord->break_start_time);
-        $breakEndTime = Carbon::parse($lastBreakRecord->break_end_time);
-        $breakSeconds = $breakEndTime->diffInSeconds($breakStartTime);
-        $lastBreakRecord->break_seconds = $breakSeconds;
-        $lastBreakRecord->save();
-    }
+if ($lastBreakRecord) {
+    $lastBreakRecord->break_end_time = now();
+    // 休憩時間の計算
+    $breakStartTime = Carbon::parse($lastBreakRecord->break_start_time);
+    $breakEndTime = Carbon::parse($lastBreakRecord->break_end_time);
+    $breakSeconds = $breakEndTime->diffInSeconds($breakStartTime);
+    $lastBreakRecord->break_seconds = $breakSeconds;
+    $lastBreakRecord->save();
+
+    // TotalBreakSeconds の更新
+    $totalBreakSeconds = TotalBreakSeconds::firstOrNew([
+        'user_id' => $userId,
+        'name' => $userName,
+        'login_date' => $today,
+    ]);
+    $totalBreakSeconds->total_break_seconds = ($totalBreakSeconds->total_break_seconds ?? 0) + $breakSeconds;
+    $totalBreakSeconds->save();
+} else {
+    // TotalBreakSeconds の新規作成
+    $totalBreakSeconds = new TotalBreakSeconds();
+    $totalBreakSeconds->user_id = $userId;
+    $totalBreakSeconds->name = $userName;
+    $totalBreakSeconds->login_date = $today;
+    $totalBreakSeconds->total_break_seconds = $breakSeconds;
+    $totalBreakSeconds->save();
+}
     break;
     }
 

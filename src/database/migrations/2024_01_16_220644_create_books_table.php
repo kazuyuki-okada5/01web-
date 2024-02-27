@@ -43,4 +43,3 @@ class CreateBooksTable extends Migration
         */
     }
 }
-
