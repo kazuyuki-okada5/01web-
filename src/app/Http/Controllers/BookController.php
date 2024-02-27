@@ -33,10 +33,9 @@ class BookController extends Controller
         // Booksテーブルからデータを取得
         $books = Book::all();
 
-        // TotalBreakSecondsテーブルからデータを取得
-        $user = auth()->user();
-        $totalBreakSeconds = TotalBreakSeconds::where('user_id', $user->id)->get();
-        return view('books.index', compact('books', 'totalBreakSeconds'));
+        $books = Book::with('totalBreakSeconds')->get();
+
+        return view('books.index', compact('books'));
     }
 
     public function stamp()

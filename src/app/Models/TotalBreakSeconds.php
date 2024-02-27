@@ -21,4 +21,8 @@ class TotalBreakSeconds extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'user_id', 'user_id')->where('login_date', $this->login_date);
+    }
 }

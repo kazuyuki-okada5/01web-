@@ -111,4 +111,8 @@ class Book extends Model
 
         return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
     }
+    public function totalBreakSeconds()
+    {
+        return $this->hasOne(TotalBreakSeconds::class, 'user_id', 'user_id')->where('login_date', $this->login_date);
+    }
 }
