@@ -1,125 +1,124 @@
+/* 全体の背景色を設定 */
 body {
     background-color: #f0f0f0;
-    /* 任意の背景色を指定 */
 }
 
-.attendees__content{
-        max-width: 100%;
-            /* 必要に応じて幅を調整 */
-            height: 800px;
-            /* コンテンツに基づいて高さを自動調整 */
-            margin: 0 auto;
-            padding: 60px;
-}
-.attendess_table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 20px;
-}
-
+/* 日付ナビゲーション部分のスタイル */
 .date-navigation {
     text-align: center;
-    /* テキストを中央に配置 */
+    /* テキストを中央揃えに */
     height: 40px;
-    /* 高さを指定 */
+    /* 高さを設定 */
     display: flex;
-    /* 子要素をフレックスボックスとして配置 */
+    /* フレックスボックスを使用して子要素を配置 */
     justify-content: center;
-    /* 子要素を水平方向中央に配置 */
+    /* 水平方向に中央揃えに */
     align-items: center;
-    /* 子要素を垂直方向中央に配置 */
-     margin-top: 40px;
-    /* 下のマージンを20pxに設定 */
+    /* 垂直方向に中央揃えに */
+    margin-top: 40px;
+    /* 上部マージンを設定 */
 }
 
+/* 日付表示部分のスタイル */
 .date-navigation span {
     width: 100px;
     /* 幅を指定 */
     display: inline-block;
     /* インラインブロック要素として表示 */
     text-align: center;
-    /* テキストを中央に配置 */
+    /* テキストを中央揃えに */
     vertical-align: middle;
-    /* テキストを垂直方向中央に配置 */
+    /* テキストを垂直方向中央に */
     text-decoration: none;
     /* リンクの下線を削除 */
 }
 
+/* 矢印リンクのコンテナのスタイル */
 .link-arrow-container {
     text-align: center;
-    /* テキストを中央に配置 */
+    /* テキストを中央揃えに */
 }
 
+/* 矢印リンクのスタイル */
 .link-arrow {
     background-color: #ffffff;
-    /* 背景色を設定 */
+    /* 背景色を指定 */
     padding: 3px 10px;
-    /* 必要に応じてパディングを調整 */
+    /* パディングを設定 */
     border-radius: 3px;
     /* 角を丸くする */
     border: 1px solid #2530ff;
     /* 外枠の設定 */
     margin: 0 20px;
-    /* 左右のマージンを10pxに設定 */
+    /* 左右のマージンを設定 */
     display: inline-block;
     /* インラインブロック要素として表示 */
     text-decoration: none;
-        /* リンクの下線を削除 */
+    /* リンクの下線を削除 */
 }
 
+/* ホバー時の矢印リンクのスタイル */
 .link-arrow:hover {
     background-color: #ccc;
     /* ホバー時の背景色を変更 */
 }
 
+/* 出欠リストのコンテンツ全体のスタイル */
 .attendees__content {
     max-width: 100%;
-    /* 必要に応じて幅を調整 */
+    /* 幅を100%に */
     height: 800px;
-
+    /* 高さを固定 */
     padding: 60px;
+    /* パディングを設定 */
     background-color: #f0f0f0;
+    /* 背景色を設定 */
 }
 
-.attendees__list{
-         text-align: center;
-        /* テーブル行内の要素を中央揃えにする */
-    }
+/* 出欠リストのリスト部分のスタイル */
+.attendees__list {
+    text-align: center;
+    /* テキストを中央揃えに */
+}
 
+/* テーブル全体のスタイル */
 .attendees_table {
     margin: 0 auto;
-    /* テーブルを水平方向に中央配置 */
+    /* 水平方向に中央揃えに */
 }
 
+/* テーブルヘッダーのセルのスタイル */
 .item_th {
     padding: 20px 70px;
+    /* パディングを設定 */
     text-align: center;
-    /* テーブルヘッダーのテキストを中央揃えにする */
+    /* テキストを中央揃えに */
     border-bottom: 1px solid #ddd;
+    /* 下線を設定 */
     background-color: #f2f2f2;
+    /* 背景色を設定 */
     border-top: 1px solid #ddd;
+    /* 上線を設定 */
     width: auto;
-    /* セルの幅を自動にする */
+    /* 幅を自動に */
     margin: 0 10px;
-    /* テーブルヘッダーを水平方向に中央に配置 */
+    /* 左右のマージンを設定 */
     font-size: 20px;
-    /* テキストサイズを変更 */
+    /* テキストサイズを設定 */
     white-space: nowrap;
     /* テキストの折り返しを禁止 */
     overflow: hidden;
     /* テキストのオーバーフローを隠す */
     text-overflow: ellipsis;
-    /* テキストがオーバーフローした場合に省略記号（...）を表示 */
+    /* テキストがオーバーフローした場合に省略記号を表示 */
 }
 
-
+/* テーブルデータのセルのスタイル */
 .info_td {
     padding: 20px;
+    /* パディングを設定 */
     text-align: center;
+    /* テキストを中央揃えに */
     border-bottom: 1px solid #ddd;
-}
-
-.info_tr:last-child .info_td {
-    border-bottom: none;
-    /* 最後の行の横線を消す */
+    /* 下線を設定 */
 }

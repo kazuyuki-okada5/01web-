@@ -1,33 +1,51 @@
+/* ページネーション */
 .pagination {
     display: flex;
+    /* ページネーションを水平に配置するために Flexbox を使用 */
     justify-content: center;
+    /* ページネーションを中央揃えに配置 */
     align-items: center;
+    /* ページネーションを垂直方向に中央揃え */
     list-style: none;
+    /* 箇条書きリストのマーカーを削除 */
     padding: 0;
+    /* ページネーションの余白をリセット */
 }
 
+/* ページネーションの各項目 */
 .pagination li {
     margin: 0 8px;
-    /* 余白を少し広げました */
+    /* 各ページ番号の間に少しの余白を追加 */
 }
 
+/* ページネーションリンク */
 .pagination a {
     text-decoration: none;
+    /* 下線を削除 */
     color: #3490dc;
+    /* リンクのテキスト色を設定 */
     padding: 8px 16px;
-    /* パディングを調整し、ボタンがよりクリックしやすくなりました */
+    /* ページネーションリンクの内側の余白を設定 */
     border: 2px solid #3490dc;
-    /* ボーダーの太さを変更しました */
+    /* ページネーションリンクのボーダーを設定 */
     border-radius: 4px;
+    /* 角丸を設定 */
     transition: background-color 0.3s;
+    /* ホバー時の色変化をスムーズにするトランジションを追加 */
 }
 
+/* ページネーションリンクのホバー時のスタイル */
 .pagination a:hover {
     background-color: #3490dc;
+    /* ホバー時の背景色を変更 */
     color: white;
+    /* ホバー時のテキスト色を変更 */
 }
 
+/* アクティブなページネーションリンク */
 .pagination .active a {
     background-color: #3490dc;
+    /* アクティブなページネーションリンクの背景色を変更 */
     color: white;
+    /* アクティブなページネーションリンクのテキスト色を変更 */
 }

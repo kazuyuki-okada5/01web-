@@ -21,7 +21,6 @@ class CreateTotalBreakSecondsTable extends Migration
                 $table->date('login_date');
                 $table->integer('total_break_seconds');
                 $table->timestamps();
-
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             });
         }

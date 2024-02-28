@@ -9,22 +9,30 @@
 <div class="date-navigation">
     <!-- 日付ナビゲーション -->
     <div class="link-arrow-container">
+        <!-- 前の日付への移動リンク -->
         <a href="{{ route('attendees.move.date', ['direction' => 'prev', 'currentDate' => $currentDate]) }}" class="link-arrow">＜</a>
     </div>
     <span>{{ $currentDate }}</span>
     <div class="link-arrow-container">
+        <!-- 次の日付への移動リンク -->
         <a href="{{ route('attendees.move.date', ['direction' => 'next', 'currentDate' => $currentDate]) }}" class="link-arrow">＞</a>
     </div>
 </div>
 
 <div class="attendees__content">
     <div class="attendees__list">
+        <!-- 出席者リストのテーブル -->
         <table class="attendees_table">
             <tr class="item_tr">
+                <!-- 列見出し: 名前 -->
                 <th class="item_th">名前</th>
+                <!-- 列見出し: 勤務開始 -->
                 <th class="item_th">勤務開始</th>
+                <!-- 列見出し: 勤務終了 -->
                 <th class="item_th">勤務終了</th>
+                <!-- 列見出し: 休憩時間 -->
                 <th class="item_th">休憩時間</th>
+                <!-- 列見出し: 勤務時間 -->
                 <th class="item_th">勤務時間</th>
             </tr>
             @if (!empty($books))
@@ -69,7 +77,7 @@
                     </tr>
                 @endforeach
             @else
-                <!-- 表示すべきデータがない場合のメッセージ -->
+                <!-- データがない場合のメッセージ -->
                 <tr>
                     <td colspan="5">表示すべきデータがありません。</td>
                 </tr>

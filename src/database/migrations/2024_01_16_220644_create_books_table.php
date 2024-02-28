@@ -19,10 +19,6 @@ class CreateBooksTable extends Migration
         $table->date('login_date');
         $table->time('start_time')->nullable();
         $table->time('end_time')->nullable();
-        $table->time('break_start_time')->nullable();
-        $table->time('break_end_time')->nullable();
-        $table->integer('break_seconds')->nullable();
-        $table->integer('total_seconds')->nullable();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->timestamps();
     });

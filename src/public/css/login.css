@@ -1,68 +1,99 @@
+/* ログインコンテンツ */
 .login__content {
     max-width: 100%;
-    /* 必要に応じて幅を調整 */
+    /* コンテンツの最大幅を設定 */
     height: 700px;
-    /* コンテンツに基づいて高さを自動調整 */
+    /* コンテンツの高さを設定 */
     margin: 0 auto;
+    /* 左右の余白を自動調整 */
     padding: 60px;
+    /* コンテンツ内の余白を設定 */
     box-sizing: border-box;
+    /* paddingとborderを含めたボックスサイズを設定 */
     display: flex;
+    /* 子要素の配置を設定 */
     flex-direction: column;
+    /* 子要素の配置方向を設定 */
     align-items: center;
+    /* 子要素の水平方向の配置方法を設定 */
     background-color: #f0f0f0;
+    /* 背景色を設定 */
 }
 
+/* ログインフォームの見出し */
 .login-form__heading h2 {
     margin-bottom: 40px;
-    /* h2 要素とテキスト間の距離を広げるためにマージンを調整 */
+    /* 見出しの下側にマージンを設定 */
 }
 
+/* フォームグループ */
 .form__group {
     width: 100%;
-    /* 親要素の幅いっぱいに広げる */
+    /* 要素の幅を100%に設定 */
     margin-bottom: 30px;
-    /* 必要に応じてマージンを調整 */
+    /* 下側のマージンを設定 */
     font-size: 20px;
+    /* フォントサイズを設定 */
     box-sizing: border-box;
+    /* paddingとborderを含めたボックスサイズを設定 */
     background-color: #f0f0f0;
+    /* 背景色を設定 */
 }
 
+/* テキスト入力フィールド */
 .form__input--text input {
     width: 400px;
+    /* 入力フィールドの幅を設定 */
     padding: 15px;
+    /* 入力フィールドの内側の余白を設定 */
     border: 2px solid #ccc;
+    /* 枠線を設定 */
     background-color: #f0f0f0;
+    /* 背景色を設定 */
     border-radius: 4px;
+    /* 角丸を設定 */
     font-weight: bold;
-        /* テキストを太くする */
+    /* テキストを太字に設定 */
 }
 
+/* フォーム送信ボタン */
 .form__button-submit {
     width: 100%;
-    /* 親要素の幅いっぱいに広げる */
+    /* ボタンの幅を100%に設定 */
     text-align: center;
+    /* ボタン内のテキストの配置を設定 */
     padding: 8px;
+    /* ボタンの内側の余白を設定 */
     margin-bottom: 40px;
+    /* 下側のマージンを設定 */
     font-size: 16px;
+    /* フォントサイズを設定 */
     background-color: blue;
+    /* 背景色を設定 */
     color: white;
+    /* テキスト色を設定 */
     border: none;
+    /* 枠線をなくす */
     border-radius: 4px;
+    /* 角丸を設定 */
 }
 
+/* ホバー時のフォーム送信ボタン */
 .form__button-submit:hover {
     background-color: darkblue;
+    /* ホバー時の背景色を設定 */
 }
 
+/* フォームグループタイトルのラベル */
 .form__group-title .form__label--item {
     color: #817878;
-    /* 例: 赤色に変更 */
+    /* テキスト色を設定 */
 }
 
-
+/* 登録リンク */
 .register__link .register__button-submit {
     color: #0000FF;
-    /* リンクの色を設定 */
+    /* テキスト色を設定 */
     text-decoration: none;
-    /* 下線を削除 */
+    /* リンクの下線をなくす */
 }

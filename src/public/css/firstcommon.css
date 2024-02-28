@@ -1,3 +1,4 @@
+/* パラグラフ要素のスタイル */
 p {
     border: 0px solid #333;
     padding: 15px;
@@ -6,23 +7,25 @@ p {
     /* 外枠の余白をゼロに設定 */
     background-color: #ffffff;
     font-size: 30px;
+    /* フォントサイズを設定 */
 }
 
-/* フッター */
+/* フッターのスタイル */
 footer {
     background-color: #ffffff;
     /* フッターの背景色 */
     color: #000000;
-    /* テキストの色を白色に設定 */
+    /* テキストの色を黒色に設定 */
     padding: 1px;
     /* パディングを追加 */
     text-align: center;
     /* テキストを中央揃えにする */
 }
 
-/* フッターテキスト */
+/* フッターテキストのスタイル */
 footer p {
     font-size: 16px;
+    /* フォントサイズを設定 */
     margin: 0;
+    /* マージンをゼロに設定 */
 }
-

@@ -1,7 +1,7 @@
-/* CSSファイルの読み込み */
+/* ヘッダー */
 .header {
     background-color: #ffffff;
-    /* ヘッダーの背景色 */
+    /* ヘッダーの背景色を設定 */
     padding: 10px;
     /* パディングを追加 */
 }
@@ -9,111 +9,95 @@
 /* ヘッダー内の要素 */
 .header__inner {
     display: flex;
+    /* 子要素をフレックスボックスとして配置 */
     justify-content: space-between;
+    /* 要素間のスペースを均等に配置 */
     align-items: center;
+    /* 子要素を中央に配置 */
 }
 
 /* ヘッダーユーティリティ */
 .header-utilities {
     margin-right: 10px;
-    /* ヘッダーユーティリティの右側のマージンを追加 */
+    /* 右側のマージンを追加 */
 }
 
 .header-utilities p {
     margin: 0;
+    /* テキストのマージンをリセット */
     font-size: 30px;
-    /* テキストのサイズを変更 */
+    /* テキストのサイズを設定 */
     font-weight: bold;
-        /* テキストを太字にする */
+    /* テキストを太字にする */
     margin-left: 40px;
-        /* テキストを右側に移動 */
+    /* 左側のマージンを追加 */
 }
 
 /* ヘッダーボタン */
 .header-button {
     display: flex;
-    /* 要素を水平に配置する */
+    /* 子要素をフレックスボックスとして配置 */
     align-items: center;
-    /* 子要素を垂直方向に中央揃えする */
+    /* 子要素を中央に配置 */
 }
 
 .header-button form,
 .header-button .button-container {
     margin-left: 0px;
-    /* 要素間の隙間を設定 */
+    /* 要素間のマージンを設定 */
     white-space: nowrap;
-        /* テキストを折り返さないようにする */
+    /* テキストを折り返さないように設定 */
 }
 
 /* ログアウトボタンのスタイル */
-/* ログアウトボタンのスタイル */
 .header-nav__button {
     background-color: #ffffff;
-    /* 背景色を白色に設定 */
+    /* 背景色を設定 */
     border: none;
-    /* 枠を消す */
+    /* 枠線を削除 */
     font-weight: bold;
     /* テキストを太字にする */
     cursor: pointer;
-    /* ホバー時にマウスカーソルを指に変更 */
+    /* マウスカーソルを指に変更 */
     font-size: 16px;
-        /* 文字サイズを変更 */
+    /* テキストのサイズを設定 */
     white-space: nowrap;
-        /* テキストを折り返さないようにする */
+    /* テキストを折り返さないように設定 */
 }
 
 /* ボタンスタイル */
 .header-button .button {
     margin-left: 10px;
+    /* 左側のマージンを追加 */
     border: 2px solid #ffffff;
+    /* 枠線を設定 */
     background-color: #ffffff;
+    /* 背景色を設定 */
     color: #000000;
-        /* 黒色に変更 */
+    /* テキストの色を設定 */
     text-decoration: none;
-        /* アンダーラインを削除 */
+    /* 下線を削除 */
     font-weight: bold;
-        /* テキストを太字にする */
-    }
-
+    /* テキストを太字にする */
+}
 
 /* ボタンコンテナのスタイル */
 .button-container {
     display: flex;
+    /* 子要素をフレックスボックスとして配置 */
 }
 
 .button-container a {
     margin-right: 30px;
-    /* 各リンクの右側の余白を10pxに設定 */
+    /* 右側のマージンを設定 */
 }
 
-/* ボタングループ */
-.button-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 50%;
-    width: 50%;
-}
-
-/* Atteボタン */
-.atte_button {
-    margin: 5px;
-    padding: 10px;
-    text-align: center;
-    background-color: #3490dc;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    display: block;
-    width: 100%;
-}
-
-/* フッター */footer {
+/* フッター */
+footer {
     background-color: #ffffff;
-    /* フッターの背景色 */
+    /* 背景色を設定 */
     color: #000000;
-    /* テキストの色を白色に設定 */
+    /* テキストの色を設定 */
     padding: 15px;
     /* パディングを追加 */
     text-align: center;
@@ -123,12 +107,15 @@
 /* フッターテキスト */
 footer p {
     font-size: 16px;
+    /* テキストのサイズを設定 */
     margin: 0;
+    /* マージンをリセット */
 }
+
 /* メディアクエリ */
 @media screen and (max-width: 768px) {
     .header__inner {
         flex-direction: column;
-        /* 画面が狭い場合は縦方向に配置 */
+        /* 要素を縦方向に配置 */
     }
 }

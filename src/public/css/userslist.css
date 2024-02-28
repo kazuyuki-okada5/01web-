@@ -1,33 +1,39 @@
+/* ボディ */
 body {
     background-color: #f0f0f0;
-    /* 任意の背景色を指定 */
+    /* 背景色を設定 */
 }
 
+/* スタンプコンテンツ */
 .stamp__content {
     max-width: 100%;
-    /* 必要に応じて幅を調整 */
+    /* 幅を100%に設定 */
     height: 800px;
-    /* コンテンツに基づいて高さを自動調整 */
+    /* 高さを固定 */
     margin: 0 auto;
+    /* 水平中央揃え */
     padding: 60px;
+    /* パディングを追加 */
 }
 
+/* スタンプ名 */
 .stamp__name {
     text-align: center;
-    /* テキストを中央に配置 */
+    /* テキストを中央揃え */
     font-size: 24px;
-        /* 文字サイズを16ピクセルに設定 */
+    /* 文字サイズを設定 */
 }
 
-/* フォーム全体を左寄せに配置 */
+/* フォーム */
 form {
     text-align: center;
+    /* テキストを中央揃え */
 }
 
-/* 入力フィールドのスタイル */
+/* 入力フィールド */
 input[type="text"] {
     padding: 10px;
-    /* 上下左右のパディングを設定 */
+    /* パディングを設定 */
     width: 360px;
     /* 幅を指定 */
     border: 1px solid #ccc;
@@ -35,19 +41,19 @@ input[type="text"] {
     border-radius: 5px;
     /* 角を丸くする */
     box-sizing: border-box;
-    /* 幅や高さにpaddingとborderを含める */
+    /* ボックスモデルを設定 */
 }
 
-/* ボタンのスタイル */
+/* 送信ボタン */
 button[type="submit"] {
     padding: 10px 20px;
-    /* 上下左右のパディングを設定 */
+    /* パディングを設定 */
     background-color: #007bff;
-    /* 背景色を指定 */
+    /* 背景色を設定 */
     color: #fff;
-    /* 文字色を指定 */
+    /* 文字色を設定 */
     border: none;
-    /* 枠線をなくす */
+    /* 枠線を削除 */
     border-radius: 5px;
     /* 角を丸くする */
     cursor: pointer;
@@ -56,47 +62,52 @@ button[type="submit"] {
     /* ホバー時のトランジション効果 */
 }
 
-/* ボタンのホバー時のスタイル */
+/* 送信ボタンのホバー時 */
 button[type="submit"]:hover {
     background-color: #0056b3;
-    /* ホバー時の背景色を指定 */
+    /* ホバー時の背景色を設定 */
 }
 
+/* ユーザーテーブル */
 .users.list_table {
     margin: 0 auto;
-    /* 左右のマージンを自動に設定して水平中央に配置 */
+    /* 水平中央揃え */
     text-align: center;
-    /* テキストを中央揃えにする */
+    /* テキストを中央揃え */
 }
 
+/* テーブルヘッダーセル */
 .item_th {
     padding: 20px 50px;
+    /* パディングを設定 */
     text-align: center;
-    /* テーブルヘッダーのテキストを中央揃えにする */
+    /* テキストを中央揃え */
     border-bottom: 1px solid #ddd;
+    /* 下線を追加 */
     background-color: #f2f2f2;
-    border-top: 1px solid #ddd;
-    width: auto;
-    /* セルの幅を自動にする */
-    margin: 0 10px;
-    /* テーブルヘッダーを水平方向に中央に配置 */
+    /* 背景色を設定 */
     font-size: 20px;
-    /* テキストサイズを変更 */
+    /* 文字サイズを設定 */
     white-space: nowrap;
     /* テキストの折り返しを禁止 */
     overflow: hidden;
-    /* テキストのオーバーフローを隠す */
+    /* オーバーフローを隠す */
     text-overflow: ellipsis;
-    /* テキストがオーバーフローした場合に省略記号（...）を表示 */
+    /* オーバーフロー時に省略記号を表示 */
 }
 
+/* テーブルデータセル */
 .info_td {
     padding: 20px;
+    /* パディングを設定 */
     text-align: center;
+    /* テキストを中央揃え */
     border-bottom: 1px solid #ddd;
+    /* 下線を追加 */
 }
 
+/* 最後の行のデータセル */
 .info_tr:last-child .info_td {
     border-bottom: none;
-    /* 最後の行の横線を消す */
+    /* 最後の行の下線を削除 */
 }

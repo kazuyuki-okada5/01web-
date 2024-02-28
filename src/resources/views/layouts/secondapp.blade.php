@@ -8,10 +8,11 @@
   <!-- CSSファイルの読み込み -->
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
   <link rel="stylesheet" href="{{ asset('css/secondcommon.css') }}">
-  <!-- yieldディレクティブを使用して動的にCSSを読み込む -->
+  
   @yield('css')
 </head>
 <body>
+  <!-- ヘッダー -->
   <header class="header">
     <div class="header__inner">
       <!-- ヘッダーの内部要素 -->
@@ -38,8 +39,9 @@
       @endif
     </div>
   </header>
+  <!-- メインコンテンツ -->
   <main>
-    <!-- コンテンツを挿入 -->
+    <!-- 各ページごとのコンテンツを挿入 -->
     @yield('content')
   </main>
   <!-- フッター -->
