@@ -50,7 +50,7 @@ class ListController extends Controller
 
     
     // ページネーションを含むデータの取得
-    public function index(Request $request)
+public function index(Request $request)
 {
     // リクエストから検索条件を取得
     $currentDate = $request->input('currentDate', now()->toDateString());
@@ -65,10 +65,11 @@ class ListController extends Controller
                 ->orderBy('login_date', 'asc')
                 ->paginate(5);
 
-    // 検索結果がない場合はnullを代入
-    if ($books->isEmpty()) {
-        $books = null;
-    }
+    // 検索結果がない場合は空のコレクションを代入
+    // または何も代入せずにそのままビューに渡す
+    // if ($books->isEmpty()) {
+    //     $books = collect(); // 空のコレクションを代入
+    // }
 
     // 検索結果と$prevDateをビューに渡す
     return view('author.attendees', compact('books', 'currentDate', 'prevDate'));

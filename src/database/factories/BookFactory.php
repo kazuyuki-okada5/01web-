@@ -12,7 +12,8 @@ class BookFactory extends Factory
 
     public function definition()
     {
-        $login_date = $this->faker->date; // 仮の日付生成
+        // 直近の2〜3日の範囲で日付を生成
+        $login_date = $this->faker->dateTimeBetween('-2 days', '-1 days')->format('Y-m-d');
 
         return [
             'name' => $this->faker->sentence,
@@ -20,10 +21,6 @@ class BookFactory extends Factory
             'login_date' => $login_date,
             'start_time' => $this->faker->time,
             'end_time' => $this->faker->time,
-            'break_start_time' => $this->faker->time,
-            'break_end_time' => $this->faker->time,
-            'break_seconds' => $this->faker->randomFloat(2, 0, 8),
-            'total_seconds' => $this->faker->randomFloat(2, 0, 8),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

@@ -36,53 +36,51 @@
                 <th class="item_th">勤務時間</th>
             </tr>
             @if (!empty($books))
-                @foreach ($books as $book)
-                    <tr class="info_tr">
-                        <!-- 名前 -->
-                        <td class="info_td">{{ $book->name }}</td>
-                        <!-- 勤務開始時間 -->
-                        <td class="info_td">{{ \Carbon\Carbon::parse($book->start_time)->format('H:i:s') }}</td>
-                        <!-- 勤務終了時間 -->
-                        <td class="info_td">{{ $book->end_time }}</td>
-                        <!-- 休憩時間 -->
-                        <td class="info_td">
-                            @php
-                                // 休憩時間を秒から時間に変換してフォーマット
-                                $totalSeconds = $book->totalBreakSeconds->total_break_seconds;
-                                $hours = floor($totalSeconds / 3600);
-                                $minutes = floor(($totalSeconds % 3600) / 60);
-                                $seconds = $totalSeconds % 60;
-                                $formattedTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-                            @endphp
-                            {{ $formattedTime }}
-                        </td>
-                        <!-- 勤務時間 -->
-                        <td class="info_td">
-                            @php
-                                // 勤務時間を計算し、休憩時間を差し引いてフォーマット
-                                $startTime = \Carbon\Carbon::parse($book->start_time);
-                                $endTime = \Carbon\Carbon::parse($book->end_time);
-                                $breakTimeSeconds = $book->totalBreakSeconds->total_break_seconds ?? 0;
-                                
-                                $workDuration = $endTime->diffInSeconds($startTime);
-                                $workDuration -= $breakTimeSeconds;
-                                
-                                $hours = floor($workDuration / 3600);
-                                $minutes = floor(($workDuration % 3600) / 60);
-                                $seconds = $workDuration % 60;
-                                $formattedWorkTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-                            @endphp
-                            {{ $formattedWorkTime }}
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <!-- データがない場合のメッセージ -->
-                <tr>
-                    <td colspan="5">表示すべきデータがありません。</td>
-                </tr>
-            @endif
+    @foreach ($books as $book)
+        <tr class="info_tr">
+            <!-- 名前 -->
+            <td class="info_td">{{ $book->name }}</td>
+            <!-- 勤務開始時間 -->
+            <td class="info_td">{{ \Carbon\Carbon::parse($book->start_time)->format('H:i:s') }}</td>
+            <!-- 勤務終了時間 -->
+            <td class="info_td">{{ \Carbon\Carbon::parse($book->end_time)->format('H:i:s') }}</td>
+            <!-- 休憩時間 -->
+            <td class="info_td">
+                @php
+                    // 休憩時間を秒から時間に変換してフォーマット
+                    $total_break_seconds = $book->total_break_seconds ?? 0;
+                    $breakHours = floor($total_break_seconds / 3600);
+                    $breakMinutes = floor(($total_break_seconds % 3600) / 60);
+                    $breakSeconds = $total_break_seconds % 60;
+                    $formattedBreakTime = sprintf('%02d:%02d:%02d', $breakHours, $breakMinutes, $breakSeconds);
+                @endphp
+                {{ $formattedBreakTime }}
+            </td>
+            <!-- 勤務時間 -->
+            <td class="info_td">
+                @php
+                    // 勤務時間を計算し、休憩時間を差し引いてフォーマット
+                    $startTime = \Carbon\Carbon::parse($book->start_time);
+                    $endTime = \Carbon\Carbon::parse($book->end_time);
+                    
+                    $workDurationSeconds = $endTime->diffInSeconds($startTime) - $total_break_seconds;
+                    $workHours = floor($workDurationSeconds / 3600);
+                    $workMinutes = floor(($workDurationSeconds % 3600) / 60);
+                    $workSeconds = $workDurationSeconds % 60;
+                    $formattedWorkTime = sprintf('%02d:%02d:%02d', $workHours, $workMinutes, $workSeconds);
+                @endphp
+                {{ $formattedWorkTime }}
+            </td>
+        </tr>
+    @endforeach
+@else
+    <!-- データがない場合のメッセージ -->
+    <tr>
+        <td colspan="5">表示すべきデータがありません。</td>
+    </tr>
+@endif
         </table>
     </div>
+    {{ $books->links() }}
 </div>
 @endsection
